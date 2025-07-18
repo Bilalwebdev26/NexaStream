@@ -45,9 +45,7 @@ export const signup = async (req, res) => {
       sameSite: "strict", //Prevent CSRF Attacks
       secure: process.env.NODE_ENV === "production",
     });
-    const user = await User.findById(existingUser._id).select(
-      "-password -token"
-    );
+    const user = await User.findById(existingUser._id).select("-password -jwt");
     return res.status(201).json({
       message: `Hey ${fullName} Your Account Created SuccessFully`,
       user,
@@ -61,9 +59,36 @@ export const signup = async (req, res) => {
 };
 export const login = async (req, res) => {
   try {
-  } catch (error) {}
+    const { email, password } = req.body;
+    const checkUser = await User.findOne({ email });
+    if (!checkUser) {
+      return res.status(400).json({ message: "User does't Exist" });
+    }
+    const checkPass = await existingUser.comparePassword(password);
+    if (!checkPass) {
+      return res.status(401).json({ message: "Invalid email or password." });
+    }
+    //token set
+    const token = checkUser.token();
+    console.log(token);
+    res.cookie("jwt", token, {
+      maxAge: 7 * 24 * 60 * 60 * 1000, //7 Dyas
+      httpOnly: true, //prevent XSS attacks
+      sameSite: "strict", //Prevent CSRF Attacks
+      secure: process.env.NODE_ENV === "production",
+    });
+    const user = await User.findById(checkUser._id).select("-password -jwt");
+    return res.status(200).json({ message: "Login SuccessFull", user });
+  } catch (error) {
+    console.log(error);
+    return res.status(500).json({ message: "Failed to login." });
+  }
 };
 export const logout = async (req, res) => {
   try {
-  } catch (error) {}
+    res.clearCookie("jwt")
+    return res.status(200).json({message:"Logout SuccessFully"})
+  } catch (error) {
+    return res.status(500).json({ message: "Failed to Logout." });
+  }
 };

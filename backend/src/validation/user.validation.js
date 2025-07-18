@@ -4,8 +4,9 @@ export const signupValidator = [
   body("email")
     .trim()
     .notEmpty()
-    .withMessage("Email is requried")
-    .notEmpty("Enter a valid email"),
+    .withMessage("Email is required.")
+    .isEmail()
+    .withMessage("Enter a valid email"),
   body("fullName").notEmpty().withMessage("UserName is required"),
   body("password")
     .trim()
@@ -15,7 +16,8 @@ export const signupValidator = [
     .withMessage("Password must be at least 6 characters"),
   body("confirmPassword")
     .trim()
-    .notEmpty("Confirm Password is required")
+    .notEmpty()
+    .withMessage("Confirm Password is required")
     .custom((value, { req }) => {
       try {
         if (value !== req.body.password) {
@@ -24,4 +26,13 @@ export const signupValidator = [
         return true;
       } catch (error) {}
     }),
+];
+export const loginValidator = [
+  body("email")
+    .trim()
+    .notEmpty()
+    .withMessage("Email is required.")
+    .isEmail()
+    .withMessage("Enter a valid email"),
+  body("password").trim().notEmpty().withMessage("Password is Required."),
 ];
