@@ -19,6 +19,10 @@ const userSchema = new mongoose.Schema(
       required: true,
       min: 6,
     },
+    gender:{
+      type:String,
+      enum:["male","female","Prefer not to say"]
+    },
     bio: {
       type: String,
       default: "",
@@ -39,6 +43,9 @@ const userSchema = new mongoose.Schema(
     isOnBoarded: {
       type: Boolean,
       default: false,
+    },
+    location:{
+      type:String,
     },
     friends: [
       {
