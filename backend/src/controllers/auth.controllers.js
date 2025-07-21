@@ -37,7 +37,7 @@ export const signup = async (req, res) => {
       const idx = Math.floor((Math.random() * 0.5 + 0.5) * 100 + 1); //51-100 tak koi bi number dedega for female
       avatarImage = `https://avatar.iran.liara.run/public/${idx}.png`;
     }
-    if(gender === "Prefer not to say"){
+    if (gender === "Prefer not to say") {
       const idx = Math.floor(Math.random() * 100 + 1); //1-100 tak koi bi number dedega for male
       avatarImage = `https://avatar.iran.liara.run/public/${idx}.png`;
     }
@@ -46,9 +46,8 @@ export const signup = async (req, res) => {
       email,
       password,
       profilePic: avatarImage,
-      gender
+      gender,
     });
-    console.log("Id : ", existingUser._id.toString());
     //--------TODO--------create the user in stream as well
     try {
       await upsertStreamUser({
@@ -56,13 +55,11 @@ export const signup = async (req, res) => {
         name: existingUser.fullName,
         image: existingUser.profilePic || "",
       });
-      console.log(`Stream User Created for ${existingUser.fullName}`);
     } catch (error) {
       console.log("Error while creating stream user");
     }
     //set token
     const token = existingUser.token();
-    console.log(token);
     res.cookie("jwt", token, {
       maxAge: 7 * 24 * 60 * 60 * 1000, //7 Dyas
       httpOnly: true, //prevent XSS attacks
@@ -106,7 +103,6 @@ export const login = async (req, res) => {
     }
     //token set
     const token = checkUser.token();
-    console.log(token);
     res.cookie("jwt", token, {
       maxAge: 7 * 24 * 60 * 60 * 1000, //7 Dyas
       httpOnly: true, //prevent XSS attacks
@@ -130,10 +126,14 @@ export const logout = async (req, res) => {
 };
 export const userOnboard = async (req, res) => {
   try {
-    const user = await User.findByIdAndUpdate(req.user?._id,{...req.body,isOnBoarded:true},{new:true})//169ms
+    const user = await User.findByIdAndUpdate(
+      req.user?._id,
+      { ...req.body, isOnBoarded: true },
+      { new: true }
+    ); //169ms
     // const user = await User.findById(req.user._id)//288ms
-    if(!user){
-      return res.status(400).json({message:"User not Found."})
+    if (!user) {
+      return res.status(400).json({ message: "User not Found." });
     }
     // user.fullName=fullName||user.fullName
     // user.bio=bio
@@ -143,27 +143,32 @@ export const userOnboard = async (req, res) => {
     // await user.save()
     try {
       await upsertStreamUser({
-        id:user._id.toString(),
-        name:user.fullName,
-        image:user.profilePic||""
-      })
+        id: user._id.toString(),
+        name: user.fullName,
+        image: user.profilePic || "",
+      });
     } catch (error) {
-      console.log(error)
+      console.log(error);
     }
-    return res.status(200).json({message:`${user.fullName} you Onboarded Successfully.`,user})
+    return res
+      .status(200)
+      .json({ message: `${user.fullName} you Onboarded Successfully.`, user });
   } catch (error) {
-     console.log(error);
+    console.log(error);
     return res.status(500).json({ message: "Failed to onboard." });
   }
 };
-export const myProfile = async(req,res)=>{
+export const myProfile = async (req, res) => {
   try {
-   const user =  await User.findById(req.user._id).select("-password")
-   if(!user){
-    return res.status(400).json({message:"User not found."})
-   }
-   return res.status(200).json({message:`${user.fullName} viewed Your Profile.`,user})
+    const user = await User.findById(req.user._id).select("-password");
+    if (!user) {
+      return res.status(400).json({ message: "User not found." });
+    }
+    return res
+      .status(200)
+      .json({ message: `${user.fullName} viewed Your Profile.`, user });
   } catch (error) {
-    
+    console.log(error);
+    return res.status(500).json({ message: "Error while showing My Profile." });
   }
-}
+};

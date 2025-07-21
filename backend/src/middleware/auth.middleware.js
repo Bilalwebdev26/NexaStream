@@ -6,14 +6,11 @@ export const protectedRoute = async (req, res, next) => {
     if (!token) {
       return res.status(401).json({ message: "The token has expired." });
     }
-    console.log("protected :", token);
     const decodedToken = jwt.verify(token, process.env.TOKEN_SECRET);
-     if (!decodedToken) {
+    if (!decodedToken) {
       return res.status(401).json({ message: "Invalid Token." });
     }
-    console.log(decodedToken)
     const user = await User.findById(decodedToken._id).select("-password");
-     console.log("user",user)
     if (!user) {
       return res.status(401).json({ message: "Forbidden Token" });
     }

@@ -1,5 +1,4 @@
 import { body } from "express-validator";
-
 export const signupValidator = [
   body("email")
     .trim()
