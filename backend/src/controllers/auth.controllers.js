@@ -172,3 +172,6 @@ export const myProfile = async (req, res) => {
     return res.status(500).json({ message: "Error while showing My Profile." });
   }
 };
+export const getme = async(req,res)=>{
+  return res.status(200).json({message:"hello"})
+}
