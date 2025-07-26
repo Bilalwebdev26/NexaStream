@@ -18,12 +18,10 @@ export const signupValidator = [
     .notEmpty()
     .withMessage("Confirm Password is required")
     .custom((value, { req }) => {
-      try {
-        if (value !== req.body.password) {
-          throw new Error("Confirm Password not Matched");
-        }
-        return true;
-      } catch (error) {}
+      if (value !== req.body.password) {
+        throw new Error("Confirm Password not Matched");
+      }
+      return true;
     }),
 ];
 export const loginValidator = [

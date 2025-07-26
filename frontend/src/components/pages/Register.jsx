@@ -3,9 +3,11 @@ import { useState } from "react";
 import { Eye } from "lucide-react";
 import { EyeOff } from "lucide-react";
 import { Link, Navigate } from "react-router";
-import {  useMutation, useQueryClient } from "@tanstack/react-query";
+import { useMutation, useQueryClient } from "@tanstack/react-query";
 import { axiosInstance } from "../../lib/axios";
 import { Loader } from "lucide-react";
+import { signup } from "../../lib/auth.api";
+import { CircleAlert } from 'lucide-react';
 
 const Register = () => {
   const [signupData, setSignupData] = useState({
@@ -22,10 +24,7 @@ const Register = () => {
 
   //usemutation
   const { mutate, isPending, error } = useMutation({
-    mutationFn: async () => {
-      const res = await axiosInstance.post("/auth/signup", signupData);
-      return res.data;
-    },
+    mutationFn: signup,
     onSuccess: () => {
       setSignupData({
         fullName: "",
@@ -41,10 +40,10 @@ const Register = () => {
   const handleSubmit = (e) => {
     e.preventDefault();
     console.log(signupData);
-    if (signupData.confirmPassword !== signupData.password) {
-      alert("Confirm Password not matched");
-      return;
-    }
+    // if (signupData.confirmPassword !== signupData.password) {
+    //   alert("Confirm Password not matched");
+    //   return;
+    // }
     mutate(signupData);
   };
   const handleEye = () => {
@@ -68,6 +67,7 @@ const Register = () => {
               nexaStream
             </span>
           </div>
+          {/* Error */}
           {/*----------- heading----------------- */}
           <div className="w-full ">
             <h2 className="text-xl md:text-2xl font-bold text-gray-400 tracking-tight">
@@ -107,6 +107,14 @@ const Register = () => {
                     }}
                     required
                   />
+                  <div className="h-2 mb-1">
+                    {error && (
+                      <span className="text-red-500 text-xs flex gap-2 items-center ">
+                        <CircleAlert/>
+                        {error.response.data.message}
+                      </span>
+                    )}
+                  </div>
                   <label className="label">Password</label>
                   <div className="rounded-3xl w-full border flex items-center bg-transparent bg-[#3b3b3b]">
                     <input
@@ -134,12 +142,21 @@ const Register = () => {
                       )}
                     </div>
                   </div>
-                  <div className="h-2 mt-1">
-                    {signupData.password && signupData.password.length < 6 && (
-                      <p className="text-red-500 text-xs ">
-                        Password must be Atleast 6 character long
-                      </p>
-                    )}
+                  <div className="h-2 mb-1">
+                    {console.log(error)}
+                    {error &&
+                      error.response?.data?.errors?.find(
+                        (err) => err.field === "password"
+                      ) && (
+                        <span className="text-red-500 text-xs ">
+                          {console.log(error)}
+                            {
+                              error.response.data.errors.find(
+                                (err) => err.field === "password"
+                              ).message
+                            }
+                        </span>
+                      )}
                   </div>
                   <label className="label">Confirm Password</label>
                   <div className="rounded-3xl w-full border flex items-center bg-transparent bg-[#3b3b3b]">
@@ -171,13 +188,23 @@ const Register = () => {
                       )}
                     </div>
                   </div>
-                  <div className="h-2">
-                    {signupData.confirmPassword &&
-                      signupData.confirmPassword !== signupData.password && (
-                        <p className="text-red-500 text-xs md:text-sm">
-                          Confirm Password Not Matched
-                        </p>
-                      )}
+                  <div className="h-2 mb-1">
+                    <div className="h-2 mb-1">
+                      {console.log(error)}
+                      {error &&
+                        error.response?.data?.errors?.find(
+                          (err) => err.field === "confirmPassword"
+                        ) && (
+                          <span className="text-red-500 text-xs ">
+                            {console.log(error)}
+                            {
+                              error.response.data.errors.find(
+                                (err) => err.field === "confirmPassword"
+                              ).message
+                            }
+                          </span>
+                        )}
+                    </div>
                   </div>
                   <label className="label">Select gender</label>
                   <select

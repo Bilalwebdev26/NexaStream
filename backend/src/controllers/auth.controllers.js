@@ -6,11 +6,12 @@ export const signup = async (req, res) => {
   const errors = validationResult(req);
 
   if (!errors.isEmpty()) {
+     console.log(errors.array()); // <-- Add this
     // Agar validation fail hua
     return res.status(400).json({
       success: false,
       errors: errors.array().map((err) => ({
-        field: err.param,
+        field: err.path,
         message: err.msg,
       })),
     });
