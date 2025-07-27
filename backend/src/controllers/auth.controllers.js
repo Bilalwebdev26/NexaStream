@@ -100,7 +100,7 @@ export const login = async (req, res) => {
     }
     const checkPass = await checkUser.comparePassword(password);
     if (!checkPass) {
-      return res.status(401).json({ message: "Invalid email or password." });
+      return res.status(401).json({ message: "Incorrect email address or password." });
     }
     //token set
     const token = checkUser.token();

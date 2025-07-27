@@ -10,16 +10,14 @@ import ChatPage from "./components/pages/ChatPage";
 import CallPage from "./components/pages/CallPage";
 import Loader from "./components/common/Loader.jsx";
 import useAuthUser from "./hooks/useAuthUser.js";
+import Layout from "./components/common/Layout.jsx";
 const App = () => {
   const { isLoading, authUser } = useAuthUser();
-  console.log("Auth User : ", authUser);
   const isAuthenticated = Boolean(authUser);
-  console.log("Authenticated User : ", isAuthenticated);
-  const isOnboarded = Boolean(authUser?.isOnboarded);
-  console.log("Is Onborded : ", isOnboarded);
+  const isOnboarded = Boolean(authUser?.isOnBoarded);
   if (isLoading) return <Loader />;
   return (
-    <div className="h-screen" data-theme="coffee">
+    <div className="h-screen" data-theme="forest">
       <Routes>
         <Route>
           <Route
@@ -27,7 +25,9 @@ const App = () => {
             path="/"
             element={
               isAuthenticated && isOnboarded ? (
-                <Home />
+                <Layout showsidebar={true}>
+                  <Home />
+                </Layout>
               ) : (
                 <Navigate to={isAuthenticated ? "/onboard" : "/login"} />
               )
@@ -41,11 +41,30 @@ const App = () => {
             path="/signup"
             element={!isAuthenticated ? <Register /> : <Navigate to={"/"} />}
           />
-          <Route path="/onboard" element={<OnBoard />} />
+          <Route
+            path="/onboard"
+            element={
+              isAuthenticated ? (
+                !isOnboarded ? (
+                  <OnBoard />
+                ) : (
+                  <Navigate to={"/"} />
+                )
+              ) : (
+                <Navigate to={"/login"} />
+              )
+            }
+          />
           <Route
             path="/notification"
             element={
-              isAuthenticated ? <Notification /> : <Navigate to={"/login"} />
+              isAuthenticated ? (
+                <Layout>
+                  <Notification />
+                </Layout>
+              ) : (
+                <Navigate to={"/login"} />
+              )
             }
           />
           <Route

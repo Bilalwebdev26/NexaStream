@@ -143,7 +143,6 @@ const Register = () => {
                     </div>
                   </div>
                   <div className="h-2 mb-1">
-                    {console.log(error)}
                     {error &&
                       error.response?.data?.errors?.find(
                         (err) => err.field === "password"
