@@ -1,5 +1,6 @@
 import React from "react";
 import { Navigate, Route, Routes } from "react-router";
+import "./App.css";
 import { Toaster } from "react-hot-toast";
 import Home from "./components/pages/Home";
 import OnBoard from "./components/pages/OnBoard";
@@ -11,13 +12,15 @@ import CallPage from "./components/pages/CallPage";
 import Loader from "./components/common/Loader.jsx";
 import useAuthUser from "./hooks/useAuthUser.js";
 import Layout from "./components/common/Layout.jsx";
+import {usethemeStore} from "./store/themeSelector.js"
 const App = () => {
   const { isLoading, authUser } = useAuthUser();
   const isAuthenticated = Boolean(authUser);
   const isOnboarded = Boolean(authUser?.isOnBoarded);
+  const{theme} = usethemeStore()
   if (isLoading) return <Loader />;
   return (
-    <div className="h-screen" data-theme="forest">
+    <div className="h-screen" data-theme={theme}>
       <Routes>
         <Route>
           <Route
