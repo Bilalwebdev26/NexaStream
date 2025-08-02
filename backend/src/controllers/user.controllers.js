@@ -33,7 +33,7 @@ export const getFriends = async (req, res) => {
         "friends",
         "fullName profilePic nativeLanguage learningLanguage"
       );
-    if (!user.lenght || !user) {
+    if (user.length===0) {
       return res.status(400).json({ message: "No Friends Found." });
     }
     return res
