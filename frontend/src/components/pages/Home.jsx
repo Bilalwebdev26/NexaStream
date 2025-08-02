@@ -64,8 +64,8 @@ const Home = () => {
   console.log(friends.friends);
 
   return (
-    <div className="p-4 sm:p-6 lg:p-8">
-      <div className="container mx-auto space-y-10">
+    <div className="p-4 sm:p-6 lg:p-8  max-w-5xl"> 
+      <div className="space-y-10">
         <div className="flex items-center justify-between poppins-font">
           <h2 className="text-xl lg:text-2xl font-bold">My Friends</h2>
           <Link
@@ -83,13 +83,14 @@ const Home = () => {
           <div className="">No Friends You Have</div>
         ) : (
           <div
-            className="overflow-x-scroll pb-4 border border-gray-200 rounded-lg p-2"
+            className="overflow-x-auto pb-4 border border-gray-200 rounded-lg p-2 "
             style={{
-              scrollbarWidth: "thick",
-              scrollbarColor: "#64748b #f1f5f9",
+              width: "100%", // Set max width for parent (you can also use Tailwind `max-w-3xl` or similar)
+              maxWidth: "100%",
+             
             }}
           >
-            <div className="flex gap-4 w-max">
+            <div className="flex gap-4">
               {friends.friends.map((friend) => (
                 <div key={friend._id} className="flex-shrink-0">
                   <FriendCard friend={friend} />

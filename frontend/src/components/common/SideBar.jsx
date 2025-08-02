@@ -1,5 +1,5 @@
-import React from "react";
-import { Bell, HomeIcon, ShipWheelIcon, Users } from "lucide-react";
+import React, { useState } from "react";
+import { Bell, CircleX, HomeIcon, ShipWheelIcon, Users } from "lucide-react";
 import { useLocation, Link } from "react-router";
 import useAuthUser from "../../hooks/useAuthUser";
 
@@ -7,10 +7,14 @@ const SideBar = () => {
   const location = useLocation();
   const currentLocation = location.pathname;
   const { authUser } = useAuthUser();
+  const[sideBar,handleSideBar]=useState(false)
   console.log(authUser);
   return (
-    <aside className="w-64 bg-base-200 border-b border-base-300 hidden lg:flex flex-col h-screen sticky top-0">
-      <div className="p-5 border-b border-base-300">
+    <aside className="w-64 bg-base-200 border-b relative border-base-300 flex flex-col h-screen top-0">
+      <div className="absolute right-2 my-2">
+        <CircleX onClick={()=>handleSideBar(!sideBar)} className="cursor-pointer"/>
+      </div>
+      <div className="p-5 border-b border-base-300 mt-2">
         <Link to={"/"} className="flex items-center justify-center gap-2.5">
           <ShipWheelIcon className="w-9 h-9 text-primary" />
           <span className="font-semibold font-mono text-3xl bg-clip-text text-transparent bg-gradient-to-r from-primary to-secondary tracking-wider">

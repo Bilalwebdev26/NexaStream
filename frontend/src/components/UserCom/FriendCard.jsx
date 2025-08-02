@@ -18,7 +18,7 @@ const FriendCard = ({ friend }) => {
     }
   };
   return (
-    <div className="card p-2 rounded-md min-w-[240px] max-w-[280px]  bg-white">
+    <div className="card p-2 rounded-md w-[360px]  bg-white">
       {/* Img + Name */}
       <div className="flex items-center gap-3 mb-3 mt-3">
         <img

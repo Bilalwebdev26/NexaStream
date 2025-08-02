@@ -64,7 +64,7 @@ export const signup = async (req, res) => {
     res.cookie("jwt", token, {
       maxAge: 7 * 24 * 60 * 60 * 1000, //7 Dyas
       httpOnly: true, //prevent XSS attacks
-      sameSite: "none", //Prevent CSRF Attacks
+      sameSite: "strict", //Prevent CSRF Attacks
       secure: process.env.NODE_ENV === "production",
     });
     const user = await User.findById(existingUser._id).select("-password");
@@ -107,7 +107,7 @@ export const login = async (req, res) => {
     res.cookie("jwt", token, {
       maxAge: 7 * 24 * 60 * 60 * 1000, //7 Dyas
       httpOnly: true, //prevent XSS attacks
-      sameSite: "none", //Prevent CSRF Attacks
+      sameSite: "strict", //Prevent CSRF Attacks
       secure: process.env.NODE_ENV === "production",
     });
     const user = await User.findById(checkUser._id).select("-password");
