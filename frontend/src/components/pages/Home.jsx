@@ -177,8 +177,8 @@ const Home = () => {
   }, [showRequest]);
 
   return (
-    <div className="p-2">
-      <div className={`w-[50%] px-4 sm:px-6 lg:px-8 bg-black`}>
+    <div className="p-2 bg-red-500 w-screen">
+      <div className={`w-full px-4 sm:px-6 lg:px-8 bg-black`}>
         <div className="space-y-10 pt-6">
           <div className="">
             <div className="flex items-center justify-between poppins-font">
