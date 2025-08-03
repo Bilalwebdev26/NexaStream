@@ -30,12 +30,12 @@ const NavBar = () => {
       <div className="container mx-auto px-4 sm:px-6 lg:px-8">
         <div className={`flex items-center ${showsidebar?"justify-end":"justify-between"}  w-full space-x-3`}>
           {!showsidebar && (
-            <div className="pl-5">
+            <div className="">
               <Link to={"/"} className="flex items-center justify-start gap-2.5">
                 <ShipWheelIcon className="size-9 text-primary" />
                 <span
                   onClick={() => setsideBar(true)}
-                  className="text-3xl font-bold bg-clip-text text-transparent bg-gradient-to-r from-primary to-secondary tracking-wider"
+                  className="text-lg lg:text-3xl font-bold bg-clip-text text-transparent bg-gradient-to-r from-primary to-secondary tracking-wider"
                 >
                   nexaStream
                 </span>
