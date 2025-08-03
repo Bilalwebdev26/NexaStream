@@ -75,12 +75,12 @@ const FriendCard = ({ friends }) => {
   };
 
   return (
-    <div className="overflow-x-auto bg-black w-full max-w-full">
+    <div className="overflow-x-auto scrollbar-hide w-full max-w-full">
       <div className="flex gap-4 w-max">
         {friends.friends.map((friend) => (
           <div
             key={friend._id}
-            className="flex-shrink-0 p-2 rounded-md w-[200px] lg:w-[300px] bg-white"
+            className="flex-shrink-0 p-2 rounded-md w-[200px] lg:w-[300px] bg-white border-2 shadow-xl"
           >
             {/* Img + Name */}
             <div className="flex items-center gap-3 mb-3 mt-3">
@@ -94,19 +94,31 @@ const FriendCard = ({ friends }) => {
               </span>
             </div>
             {/* Language Info */}
+            {/* Native Info */}
+            {/* <div className=""> */}
+
             <div className="w-full flex items-center gap-2">
-              <div className="w-1/2 border rounded-xl text-center text-black text-xs py-1">
-                <span className="flex items-center justify-center gap-2 text-xs text-black">
-                  {getLangFlag(friend.nativeLanguage)} Native:
-                  <span className="font-semibold">{friend.nativeLanguage}</span>
+              <div className="w-1/2">
+                 <span className="text-xs font-semibold text-black">
+                  Native :{" "}
                 </span>
+              <div className="w-full border rounded-xl text-center flex items-center justify-center gap-2 text-black text-xs py-1">
+               
+                <span className=""> {getLangFlag(friend.nativeLanguage)}</span>
+
+                <span className="font-semibold">{friend.nativeLanguage}</span>
               </div>
-              <div className="w-1/2 border rounded-xl text-center text-xs py-1 px-2">
-                <span className="flex items-center gap-2 justify-center text-xs text-black">
-                  {getLangFlag(friend.learningLanguage)}
-                  Learning:
-                  <span className="font-semibold">{friend.learningLanguage}</span>
+              </div>
+                <div className="w-1/2">
+                 <span className="text-xs font-semibold text-black">
+                  Learning :{" "}
                 </span>
+              <div className="w-full border rounded-xl text-center flex items-center justify-center gap-2 text-black text-xs py-1">
+               
+                <span className=""> {getLangFlag(friend.learningLanguage)}</span>
+
+                <span className="font-semibold">{friend.learningLanguage}</span>
+              </div>
               </div>
             </div>
             {/* Message Button */}
@@ -121,4 +133,4 @@ const FriendCard = ({ friends }) => {
     </div>
   );
 };
-export default FriendCard
+export default FriendCard;

@@ -26,7 +26,7 @@ const NavBar = () => {
     mutate();
   };
   return (
-    <nav className="bg-base-200 border-b border-base-300 top-0 z-30 h-16 flex items-center poppins-font relative">
+    <nav className="bg-base-200 w-full border-b border-base-300 top-0 z-30 h-16 flex items-center poppins-font relative">
       <div className="container mx-auto px-4 sm:px-6 lg:px-8">
         <div
           className={`flex items-center ${

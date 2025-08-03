@@ -111,7 +111,8 @@ const SignIn = () => {
                       {error && (
                         <span className="text-red-500 text-xs flex gap-2 items-center my-2">
                           <CircleAlert className="w-4 h-4" />
-                          {error.response.data.message}
+                          {console.log("Error From SignIn : ",error)}
+                          {error.response?.data?.message}
                         </span>
                       )}
                     </div>
