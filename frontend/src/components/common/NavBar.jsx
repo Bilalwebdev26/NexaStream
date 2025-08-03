@@ -51,11 +51,11 @@ const NavBar = () => {
           )}
 
           {/* ------------------------- */}
-          <div className="flex items-center justify-end  lg:gap-2">
-            <Link to={"/notification"}>
-              <button className="btn btn-ghost btn-circle">
-                <BellIcon className="" />
-              </button>
+          <div className="flex items-center justify-end ">
+            <Link to={"/notification"} className="btn btn-ghost btn-circle">
+              {/* <button className="btn btn-ghost btn-circle flex items-center"> */}
+              <BellIcon className="" />
+              {/* </button> */}
             </Link>
 
             {/* Theme Selector */}
