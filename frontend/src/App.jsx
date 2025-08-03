@@ -13,11 +13,14 @@ import Loader from "./components/common/Loader.jsx";
 import useAuthUser from "./hooks/useAuthUser.js";
 import Layout from "./components/common/Layout.jsx";
 import {usethemeStore} from "./store/themeSelector.js"
+import { useSideBarStore } from "./store/globalState.js";
 const App = () => {
   const { isLoading, authUser } = useAuthUser();
   const isAuthenticated = Boolean(authUser);
   const isOnboarded = Boolean(authUser?.isOnBoarded);
   const{theme} = usethemeStore()
+  const { showsidebar } = useSideBarStore();
+  console.log("showsidebar from app : ",showsidebar)
   if (isLoading) return <Loader />;
   return (
     <div className="h-screen" data-theme={theme}>
@@ -28,7 +31,7 @@ const App = () => {
             path="/"
             element={
               isAuthenticated && isOnboarded ? (
-                <Layout showsidebar={true}>
+                <Layout showsidebar={showsidebar}>
                   <Home />
                 </Layout>
               ) : (
@@ -62,7 +65,7 @@ const App = () => {
             path="/notification"
             element={
               isAuthenticated ? (
-                <Layout>
+                <Layout showsidebar={showsidebar}>
                   <Notification />
                 </Layout>
               ) : (

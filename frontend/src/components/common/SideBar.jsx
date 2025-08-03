@@ -2,17 +2,28 @@ import React, { useState } from "react";
 import { Bell, CircleX, HomeIcon, ShipWheelIcon, Users } from "lucide-react";
 import { useLocation, Link } from "react-router";
 import useAuthUser from "../../hooks/useAuthUser";
+import { useSideBarStore } from "../../store/globalState";
 
 const SideBar = () => {
   const location = useLocation();
   const currentLocation = location.pathname;
   const { authUser } = useAuthUser();
-  const[sideBar,handleSideBar]=useState(false)
+  //const [sideBar, handleSideBar] = useState(false);
   console.log(authUser);
+  const { showsidebar, setsideBar } = useSideBarStore();
+  console.log("SHow side bar from sidebar : ", showsidebar);
   return (
-    <aside className="w-64 bg-base-200 border-b relative border-base-300 flex flex-col h-screen top-0">
+    <aside
+      className={`w-64 bg-base-200 border-b z-50 fixed top-0 left-0 h-screen transition-all duration-300 ease-in-out ${
+        showsidebar ? "translate-x-0" : "-translate-x-full"
+      }`}
+    >
       <div className="absolute right-2 my-2">
-        <CircleX onClick={()=>handleSideBar(!sideBar)} className="cursor-pointer"/>
+        <CircleX
+          //onClick={() => handleSideBar(!sideBar)}
+          onClick={() => setsideBar(!showsidebar)}
+          className="cursor-pointer"
+        />
       </div>
       <div className="p-5 border-b border-base-300 mt-2">
         <Link to={"/"} className="flex items-center justify-center gap-2.5">
@@ -64,7 +75,7 @@ const SideBar = () => {
               {authUser?.fullName}
             </span>
             <div className="flex gap-1 justify-start items-center">
-              <span className="size-2 rounded-full bg-success inline-block"/>
+              <span className="size-2 rounded-full bg-success inline-block" />
               <span className="text-green-600 text-xs font-bold">Online</span>
             </div>
           </div>
