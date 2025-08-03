@@ -33,6 +33,10 @@ const Layout = ({ children, showsidebar }) => {
       <div className="flex">
         {/* <div className="flex z-50">{showsidebar && <SideBar />}</div> */}
         <div className="flex-1 flex flex-col">
+          <div className="absolute top-0 left-0 z-50">
+            {" "}
+            <SideBar />
+          </div>
           <NavBar />
           <main className="">{children}</main>
         </div>

@@ -120,6 +120,7 @@ import { Link } from "react-router"; // ✅ Correct import
 import { UsersRound } from "lucide-react";
 import FriendCard from "../UserCom/FriendCard";
 import { useSideBarStore } from "../../store/globalState";
+import FriendSkeleton from "../UserCom/FriendSkeleton";
 
 const Home = () => {
   const [outgoingReqIds, setOutgoingReqIds] = useState(new Set());
@@ -197,7 +198,7 @@ const Home = () => {
           <div className="w-full">
             {/* Friend Show */}
             {friendPending ? (
-              <div className="text-white">Loading...</div>
+              <div className=""><FriendSkeleton/></div>
             ) : friends?.friends?.length === 0 ? (
               <div className="text-white">No Friends You Have</div>
             ) : (

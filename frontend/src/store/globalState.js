@@ -1,7 +1,7 @@
 import { create } from "zustand";
 
 export const useSideBarStore = create((set) => ({
-  showsidebar: true,
+  showsidebar: false,
   setsideBar: (showsidebar) => {
     set({ showsidebar });
   },

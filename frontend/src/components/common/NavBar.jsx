@@ -37,7 +37,7 @@ const NavBar = () => {
             <div className="">
               <Link
                 to={"/"}
-                className="flex items-center justify-start gap-2.5"
+                className="flex items-center  gap-2.5"
               >
                 <ShipWheelIcon className="size-5 lg:size-9 text-primary" />
                 <span
@@ -78,10 +78,7 @@ const NavBar = () => {
           </div>
         </div>
       </div>
-      <div className="absolute top-0 left-0 z-50">
-        {" "}
-        <SideBar />
-      </div>
+      
     </nav>
   );
 };

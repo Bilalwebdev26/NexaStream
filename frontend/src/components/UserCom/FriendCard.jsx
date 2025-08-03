@@ -89,7 +89,7 @@ const FriendCard = ({ friends }) => {
                 src={friend.profilePic}
                 alt={friend.fullName}
               />
-              <span className="text-xl font-bold text-black">
+              <span className="text-base lg:text-xl font-bold text-black">
                 {friend.fullName}
               </span>
             </div>
@@ -97,7 +97,7 @@ const FriendCard = ({ friends }) => {
             {/* Native Info */}
             {/* <div className=""> */}
 
-            <div className="w-full flex items-center gap-2">
+            <div className="w-full flex items-center gap-1">
               <div className="w-1/2">
                  <span className="text-xs font-semibold text-black">
                   Native :{" "}
