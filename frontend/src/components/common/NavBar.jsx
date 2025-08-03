@@ -28,11 +28,18 @@ const NavBar = () => {
   return (
     <nav className="bg-base-200 border-b border-base-300 top-0 z-30 h-16 flex items-center poppins-font relative">
       <div className="container mx-auto px-4 sm:px-6 lg:px-8">
-        <div className={`flex items-center ${showsidebar?"justify-end":"justify-between"}  w-full space-x-3`}>
+        <div
+          className={`flex items-center ${
+            showsidebar ? "justify-end" : "justify-between"
+          }  w-full space-x-3`}
+        >
           {!showsidebar && (
             <div className="">
-              <Link to={"/"} className="flex items-center justify-start gap-2.5">
-                <ShipWheelIcon className="size-9 text-primary" />
+              <Link
+                to={"/"}
+                className="flex items-center justify-start gap-2.5"
+              >
+                <ShipWheelIcon className="size-5 lg:size-9 text-primary" />
                 <span
                   onClick={() => setsideBar(true)}
                   className="text-lg lg:text-3xl font-bold bg-clip-text text-transparent bg-gradient-to-r from-primary to-secondary tracking-wider"
@@ -44,14 +51,13 @@ const NavBar = () => {
           )}
 
           {/* ------------------------- */}
-          <div className="flex items-center gap-2">
-            <div className="flex items-center gap-3 sm:gap-4">
-              <Link to={"/notification"}>
-                <button className="btn btn-ghost btn-circle">
-                  <BellIcon className="size-6 text-base-content opacity-70" />
-                </button>
-              </Link>
-            </div>
+          <div className="flex items-center justify-end  lg:gap-2">
+            <Link to={"/notification"}>
+              <button className="btn btn-ghost btn-circle">
+                <BellIcon className="" />
+              </button>
+            </Link>
+
             {/* Theme Selector */}
             <ThemeSelector />
             <div className="avatar">
@@ -72,7 +78,10 @@ const NavBar = () => {
           </div>
         </div>
       </div>
-      <div className="absolute top-0 left-0 z-50"> <SideBar /></div>
+      <div className="absolute top-0 left-0 z-50">
+        {" "}
+        <SideBar />
+      </div>
     </nav>
   );
 };
