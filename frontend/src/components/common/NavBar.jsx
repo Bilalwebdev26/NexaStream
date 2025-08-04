@@ -27,13 +27,11 @@ const NavBar = () => {
   };
   return (
     <nav className="bg-base-200 w-full border-b border-base-300 top-0 z-30 h-16 flex items-center poppins-font relative">
-      <div className="container mx-auto px-4 sm:px-6 lg:px-8">
+      <div className="container mx-auto px-4 sm:px-6 lg:px-8 w-full">
         <div
-          className={`flex items-center ${
-            showsidebar ? "justify-end" : "justify-between"
-          }  w-full space-x-3`}
+          className={`flex items-center justify-between`}
         >
-          {!showsidebar && (
+          {/* {!showsidebar && ( */}
             <div className="">
               <Link
                 to={"/"}
@@ -48,7 +46,7 @@ const NavBar = () => {
                 </span>
               </Link>
             </div>
-          )}
+          {/* )} */}
 
           {/* ------------------------- */}
           <div className="flex items-center justify-end ">

@@ -14,6 +14,7 @@ import useAuthUser from "./hooks/useAuthUser.js";
 import Layout from "./components/common/Layout.jsx";
 import {usethemeStore} from "./store/themeSelector.js"
 import { useSideBarStore } from "./store/globalState.js";
+import Friends from "./components/pages/Friends.jsx";
 const App = () => {
   const { isLoading, authUser } = useAuthUser();
   const isAuthenticated = Boolean(authUser);
@@ -67,6 +68,18 @@ const App = () => {
               isAuthenticated ? (
                 <Layout showsidebar={showsidebar}>
                   <Notification />
+                </Layout>
+              ) : (
+                <Navigate to={"/login"} />
+              )
+            }
+          />
+          <Route
+            path="/friends"
+            element={
+              isAuthenticated ? (
+                <Layout showsidebar={showsidebar}>
+                  <Friends />
                 </Layout>
               ) : (
                 <Navigate to={"/login"} />
