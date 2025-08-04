@@ -122,6 +122,7 @@ import FriendCard from "../UserCom/FriendCard";
 import { useSideBarStore } from "../../store/globalState";
 import FriendSkeleton from "../UserCom/FriendSkeleton";
 import RecommendUser from "../UserCom/RecommendUser";
+import RecommendUserSkeleton from "../UserCom/RecommendUserSkeleton";
 
 const Home = () => {
   const [outgoingReqIds, setOutgoingReqIds] = useState(new Set());
@@ -220,7 +221,7 @@ const Home = () => {
           </div>
           {
             recommendPending?(
-              <p>Loading</p>
+              <RecommendUserSkeleton/>
             ):(
               recommendUsers.length<1?(
                 <p>No Recomend User Found</p>
