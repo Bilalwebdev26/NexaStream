@@ -6,7 +6,7 @@ export const signup = async (req, res) => {
   const errors = validationResult(req);
 
   if (!errors.isEmpty()) {
-     console.log(errors.array()); // <-- Add this
+    console.log(errors.array()); // <-- Add this
     // Agar validation fail hua
     return res.status(400).json({
       success: false,
@@ -64,7 +64,7 @@ export const signup = async (req, res) => {
     res.cookie("jwt", token, {
       maxAge: 7 * 24 * 60 * 60 * 1000, //7 Dyas
       httpOnly: true, //prevent XSS attacks
-      sameSite: "strict", //Prevent CSRF Attacks
+      sameSite: "none", //Prevent CSRF Attacks
       secure: process.env.NODE_ENV === "production",
     });
     const user = await User.findById(existingUser._id).select("-password");
@@ -100,14 +100,16 @@ export const login = async (req, res) => {
     }
     const checkPass = await checkUser.comparePassword(password);
     if (!checkPass) {
-      return res.status(401).json({ message: "Incorrect email address or password." });
+      return res
+        .status(401)
+        .json({ message: "Incorrect email address or password." });
     }
     //token set
     const token = checkUser.token();
     res.cookie("jwt", token, {
       maxAge: 7 * 24 * 60 * 60 * 1000, //7 Dyas
       httpOnly: true, //prevent XSS attacks
-      sameSite: "strict", //Prevent CSRF Attacks
+      sameSite: "none", //Prevent CSRF Attacks
       secure: process.env.NODE_ENV === "production",
     });
     const user = await User.findById(checkUser._id).select("-password");
@@ -119,7 +121,11 @@ export const login = async (req, res) => {
 };
 export const logout = async (req, res) => {
   try {
-    res.clearCookie("jwt");
+    res.clearCookie("jwt", {
+      httpOnly: true,
+      sameSite: "none",
+      secure: process.env.NODE_ENV === "production",
+    });
     return res.status(200).json({ message: "Logout SuccessFully" });
   } catch (error) {
     return res.status(500).json({ message: "Failed to Logout." });
@@ -173,6 +179,6 @@ export const myProfile = async (req, res) => {
     return res.status(500).json({ message: "Error while showing My Profile." });
   }
 };
-export const getme = async(req,res)=>{
-  return res.status(200).json({message:"hello"})
-}
+export const getme = async (req, res) => {
+  return res.status(200).json({ message: "hello" });
+};
