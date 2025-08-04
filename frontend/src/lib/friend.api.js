@@ -8,7 +8,7 @@ export const showFriends = async () => {
 };
 export const showRecommendation = async () => {
   const res = await axiosInstance.get("/users/recomended");
-  return res.data;
+  return res.data.users;
 };
 export const showOutgoingRequest = async () => {
   const res = await axiosInstance.get("/users/showoutgoing");

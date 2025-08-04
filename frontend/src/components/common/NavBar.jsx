@@ -34,7 +34,7 @@ const NavBar = () => {
           {/* {!showsidebar && ( */}
             <div className="">
               <Link
-                to={"/"}
+                
                 className="flex items-center  gap-2.5"
               >
                 <ShipWheelIcon className="size-5 lg:size-9 text-primary" />

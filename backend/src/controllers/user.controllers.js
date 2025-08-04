@@ -8,11 +8,11 @@ export const getRecomendedUsers = async (req, res) => {
     const recomendedUsers = await User.find({
       $and: [
         { _id: { $ne: req.user._id } }, //me na hu object me
-        { $id: { $nin: req.user.friends } },
+        { _id: { $nin: req.user.friends } },
         { isOnBoarded: true },
       ],
     });
-    if (!recomendedUsers.lenght) {
+    if (recomendedUsers.length < 1) {
       return res.status(400).json({ message: "Recommend User Not Found." });
     }
     return res
@@ -33,7 +33,7 @@ export const getFriends = async (req, res) => {
         "friends",
         "fullName profilePic nativeLanguage learningLanguage"
       );
-    if (user.length===0) {
+    if (user.length === 0) {
       return res.status(400).json({ message: "No Friends Found." });
     }
     return res
@@ -157,7 +157,9 @@ export const showConnections = async (req, res) => {
       sender: req.user._id,
       status: "accepted",
     }).populate("recipient", "fullName profilePic");
-    return res.status(200).json({ message: "Show Notifications", incommingReq, acceptReq });
+    return res
+      .status(200)
+      .json({ message: "Show Notifications", incommingReq, acceptReq });
   } catch (error) {
     console.log(error);
     return res.status(500).json({ message: "Error while show Notifications." });
@@ -180,6 +182,8 @@ export const getOutgoingRequest = async (req, res) => {
       .json({ message: "Show Outgoing Requests.", outgoingReq });
   } catch (error) {
     console.log(error);
-    return res.status(500).json({ message: "Error while show Outgoing Requests." });
+    return res
+      .status(500)
+      .json({ message: "Error while show Outgoing Requests." });
   }
 };

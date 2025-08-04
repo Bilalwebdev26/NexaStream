@@ -36,6 +36,7 @@ const SideBar = () => {
       <nav className="flex-1 p-4 space-y-3">
         <Link
           to={"/"}
+          onClick={() => setsideBar(!showsidebar)}
           className={`flex items-center gap-3 justify-start w-full px-3 normal-case btn btn-ghost ${
             currentLocation === "/" ? "btn-active" : ""
           }`}
@@ -45,21 +46,24 @@ const SideBar = () => {
         </Link>
         <Link
           to={"/friends"}
+          onClick={() => setsideBar(!showsidebar)}
           className={`flex items-center gap-3 justify-start w-full px-3 normal-case btn btn-ghost ${
             currentLocation === "/friends" ? "btn-active" : ""
           }`}
         >
           <Users />
-          <span>Friends</span>
+          <span >Friends</span>
         </Link>
         <Link
           to={"/notification"}
+          onClick={() => setsideBar(!showsidebar)}
           className={`flex items-center gap-3 justify-start w-full px-3 normal-case btn btn-ghost ${
             currentLocation === "/notification" ? "btn-active" : ""
           }`}
+          
         >
           <Bell />
-          <span>Notification</span>
+          <span >Notification</span>
         </Link>
       </nav>
       {/* User Profile Section-Online- */}

@@ -75,7 +75,7 @@ const FriendCard = ({ friends }) => {
   };
 
   return (
-    <div className="overflow-x-auto scrollbar-hide w-full max-w-full">
+    <div className={`overflow-x-auto lg:scrollbar-hide w-full max-w-full`}>
       <div className="flex gap-4 w-max">
         {friends.friends.map((friend) => (
           <div

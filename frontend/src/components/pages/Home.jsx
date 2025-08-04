@@ -121,6 +121,7 @@ import { UsersRound } from "lucide-react";
 import FriendCard from "../UserCom/FriendCard";
 import { useSideBarStore } from "../../store/globalState";
 import FriendSkeleton from "../UserCom/FriendSkeleton";
+import RecommendUser from "../UserCom/RecommendUser";
 
 const Home = () => {
   const [outgoingReqIds, setOutgoingReqIds] = useState(new Set());
@@ -139,7 +140,7 @@ const Home = () => {
 
   // Recommendation
   const {
-    data: recommend = [],
+    data: recommendUsers = [],
     isPending: recommendPending,
     error: recommendUserError,
   } = useQuery({
@@ -178,14 +179,12 @@ const Home = () => {
   }, [showRequest]);
 
   return (
-    <div className="px-2 w-screen">
+    <div className="px-2 w-screen poppins-font">
       <div className={`w-full  `}>
         <div className="space-y-10 pt-6">
           <div className="">
             <div className="flex items-center justify-between poppins-font">
-              <h2 className="text-xl lg:text-2xl font-bold ">
-                My Friends
-              </h2>
+              <h2 className="text-xl lg:text-2xl font-bold ">My Friends</h2>
               <Link
                 to={"/"}
                 className="flex items-center gap-2 border border-white rounded-3xl px-3 py-1"
@@ -198,7 +197,9 @@ const Home = () => {
           <div className="w-full">
             {/* Friend Show */}
             {friendPending ? (
-              <div className=""><FriendSkeleton/></div>
+              <div className="">
+                <FriendSkeleton />
+              </div>
             ) : friends?.friends?.length === 0 ? (
               <div className="text-white">No Friends You Have</div>
             ) : (
@@ -208,7 +209,31 @@ const Home = () => {
             )}
           </div>
         </div>
+
         {/* Section Recommend User */}
+        <section className="my-3 poppins-font">
+          <div className="my-2">
+            <h2 className="text-3xl font-bold">Meet New Learners</h2>
+            <p className="text-sm">
+              Discover perfect Language exchange partners based on your profile.
+            </p>
+          </div>
+          {
+            recommendPending?(
+              <p>Loading</p>
+            ):(
+              recommendUsers.length<1?(
+                <p>No Recomend User Found</p>
+              ):(
+               <div className="w-full p-2">
+                {console.log(recommendUsers)}
+                <RecommendUser recommendUsers={recommendUsers}/>
+               </div>
+              )
+            )
+          }
+        </section>
+        
       </div>
     </div>
   );
