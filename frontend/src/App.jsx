@@ -15,6 +15,7 @@ import Layout from "./components/common/Layout.jsx";
 import {usethemeStore} from "./store/themeSelector.js"
 import { useSideBarStore } from "./store/globalState.js";
 import Friends from "./components/pages/Friends.jsx";
+import Profile from "./components/pages/Profile.jsx";
 const App = () => {
   const { isLoading, authUser } = useAuthUser();
   const isAuthenticated = Boolean(authUser);
@@ -47,6 +48,14 @@ const App = () => {
           <Route
             path="/signup"
             element={!isAuthenticated ? <Register /> : <Navigate to={"/"} />}
+          />
+          <Route
+            path="/friend/:id"
+            element={isAuthenticated ? (
+              <Layout showsidebar={showsidebar}>
+                <Profile /> 
+              </Layout>
+            ): <Navigate to={"/"} />}
           />
           <Route
             path="/onboard"

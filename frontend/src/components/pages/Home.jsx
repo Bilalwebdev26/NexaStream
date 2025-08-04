@@ -117,7 +117,7 @@ import {
   showRecommendation,
 } from "../../lib/friend.api";
 import { Link } from "react-router"; // ✅ Correct import
-import { UsersRound } from "lucide-react";
+import { CheckCircle, UsersRound } from "lucide-react";
 import FriendCard from "../UserCom/FriendCard";
 import { useSideBarStore } from "../../store/globalState";
 import FriendSkeleton from "../UserCom/FriendSkeleton";
@@ -125,9 +125,9 @@ import RecommendUser from "../UserCom/RecommendUser";
 import RecommendUserSkeleton from "../UserCom/RecommendUserSkeleton";
 
 const Home = () => {
-  const [outgoingReqIds, setOutgoingReqIds] = useState(new Set());
-  const queryClient = useQueryClient();
-  const { showsidebar, setsideBar } = useSideBarStore();
+  // const [outgoingReqIds, setOutgoingReqIds] = useState(new Set());
+  // const queryClient = useQueryClient();
+  // const { showsidebar, setsideBar } = useSideBarStore();
 
   // Friends
   const {
@@ -149,35 +149,41 @@ const Home = () => {
     queryFn: showRecommendation,
   });
 
-  // Outgoing Requests
-  const {
-    data: showRequest = [],
-    isPending: showRequestPending,
-    error: showRequestError,
-  } = useQuery({
-    queryKey: ["showRequest"],
-    queryFn: showOutgoingRequest,
-  });
+  // // Outgoing Requests
+  // const {
+  //   data: showRequest,
+  //   isPending: showRequestPending,
+  //   error: showRequestError,
+  // } = useQuery({
+  //   queryKey: ["showRequest"],
+  //   queryFn: showOutgoingRequest,
+  // });
+  // console.log("Outgoing Reqs : ",showRequest)
 
   // Mutation
-  const {
-    mutate: sendFriendRequestMutate,
-    isPending: sendFriendRequestPending,
-    error: sendFriendRequestError,
-  } = useMutation({
-    mutationFn: sendFriendRequest,
-    onSuccess: () => {
-      queryClient.invalidateQueries({ queryKey: ["showRequest"] });
-    },
-  });
+  // const {
+  //   mutate: sendFriendRequestMutate,
+  //   isPending: sendFriendRequestPending,
+  //   error: sendFriendRequestError,
+  // } = useMutation({
+  //   mutationFn: sendFriendRequest,
+  //   onSuccess: () => {
+  //     queryClient.invalidateQueries({ queryKey: ["showRequest"] });
+  //   },
+  // });
 
-  // Outgoing request IDs setup (optional usage)
-  useEffect(() => {
-    if (showRequest.length > 0) {
-      const ids = new Set(showRequest.map((item) => item.id));
-      setOutgoingReqIds(ids);
-    }
-  }, [showRequest]);
+  // useEffect(() => {
+  //   const outgoingIds = new Set();
+  //   if (showRequest && showRequest.length > 0) {
+  //     showRequest.forEach((req) => {
+  //       outgoingIds.add(req.recipient._id);
+  //     });
+  //     setOutgoingReqIds(outgoingIds);
+  //     console.log("Out going Friends Ids : ", outgoingReqIds);
+  //   }
+  // }, [outgoingReqIds]);
+
+  //console.log("New Outgoing Reqs : ",outgoingReqIds);
 
   return (
     <div className="px-2 w-screen poppins-font">
@@ -188,10 +194,10 @@ const Home = () => {
               <h2 className="text-xl lg:text-2xl font-bold ">My Friends</h2>
               <Link
                 to={"/"}
-                className="flex items-center gap-2 border border-white rounded-3xl px-3 py-1"
+                className="flex items-center gap-2 border border-secondary rounded-3xl px-3 py-1"
               >
                 <UsersRound className="size-4" />
-                <span className="text-sm font-bold">Friend Requests</span>
+                <span className="text-sm font-bold ">Friend Requests</span>
               </Link>
             </div>
           </div>
@@ -219,22 +225,17 @@ const Home = () => {
               Discover perfect Language exchange partners based on your profile.
             </p>
           </div>
-          {
-            recommendPending?(
-              <RecommendUserSkeleton/>
-            ):(
-              recommendUsers.length<1?(
-                <p>No Recomend User Found</p>
-              ):(
-               <div className="w-full p-2">
-                {console.log(recommendUsers)}
-                <RecommendUser recommendUsers={recommendUsers}/>
-               </div>
-              )
-            )
-          }
+          {recommendPending ? (
+            <RecommendUserSkeleton />
+          ) : recommendUsers.length < 1 ? (
+            <p>No Recomend User Found</p>
+          ) : (
+            <div className="w-full p-2">
+              {console.log(recommendUsers)}
+              <RecommendUser recommendUsers={recommendUsers} />
+            </div>
+          )}
         </section>
-        
       </div>
     </div>
   );
