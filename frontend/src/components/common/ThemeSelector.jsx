@@ -44,7 +44,7 @@ const ThemeSelector = () => {
         </div>
       )} */}
       {toggleBtn === true && (
-        <div tabIndex={0} className="custom-scroll overflow-y-auto absolute w-48 h-64 bg-primary/20 backdrop-blur-lg -left-40 top-12 transition-all rounded-md p-2 border border-base-300">
+        <div tabIndex={0} className="custom-scroll space-y-2 overflow-y-auto absolute w-48 h-64 bg-primary/20 backdrop-blur-lg -left-40 top-12 transition-all rounded-md p-2 border border-base-300">
           {THEMES.map((themeN, index) => (
             <div
               key={index}

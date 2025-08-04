@@ -183,12 +183,12 @@ const Home = () => {
         <div className="space-y-10 pt-6">
           <div className="">
             <div className="flex items-center justify-between poppins-font">
-              <h2 className="text-xl lg:text-2xl font-bold text-white">
+              <h2 className="text-xl lg:text-2xl font-bold ">
                 My Friends
               </h2>
               <Link
                 to={"/"}
-                className="flex items-center gap-2 border border-white text-white rounded-3xl px-3 py-1"
+                className="flex items-center gap-2 border border-white rounded-3xl px-3 py-1"
               >
                 <UsersRound className="size-4" />
                 <span className="text-sm font-bold">Friend Requests</span>
