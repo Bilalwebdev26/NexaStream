@@ -14,7 +14,7 @@ const SideBar = () => {
   console.log("SHow side bar from sidebar : ", showsidebar);
   return (
     <aside
-      className={`w-64 bg-base-200 border-b z-50 fixed top-0 left-0 h-screen transition-all duration-300 ease-in-out ${
+      className={`w-64 lg:w-[346px] bg-base-200 border-b z-50 fixed top-0 left-0 h-screen transition-all duration-300 ease-in-out ${
         showsidebar ? "translate-x-0" : "-translate-x-full"
       }`}
     >

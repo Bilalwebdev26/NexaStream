@@ -10,10 +10,12 @@ import React, { useEffect, useState } from "react";
 import { LANGUAGE_TO_FLAG } from "../../constant";
 import { showOutgoingRequest, sendFriendRequest } from "../../lib/friend.api";
 import { useMutation, useQuery, useQueryClient } from "@tanstack/react-query";
+import { useNavigate } from "react-router";
 const RecommendUser = ({ recommendUsers }) => {
   const [outgoingReqIds, setOutgoingReqIds] = useState(new Set());
   const [loadingId, setLoadingId] = useState(null);
   const queryClient = useQueryClient();
+  const naviagte = useNavigate();
   // Outgoing Requests
   const {
     data: showRequest,
@@ -44,6 +46,10 @@ const RecommendUser = ({ recommendUsers }) => {
   }, [showRequest]);
   console.log("I create Outgoing : ", outgoingReqIds);
   console.log("Fetch create Outgoing : ", showRequest);
+  const HandleProfile = (id) => {
+    if (!id) return null;
+    naviagte(`/profile/${id}`);
+  };
 
   const getLangFlag = (lang) => {
     if (!lang) return null;
@@ -74,24 +80,35 @@ const RecommendUser = ({ recommendUsers }) => {
         return (
           <div
             key={recommend._id}
-            className="border p-2  rounded-md hover:bg-black/70 duration-200"
+            className="border p-2 cursor-pointer hover:bg-secondary/10 rounded-md hover:scale-105 duration-200"
           >
             {/* profile Info */}
-            <div className="flex items-center gap-2">
+            <div
+              onClick={() => HandleProfile(recommend._id)}
+              className="flex items-center gap-2"
+            >
               <div className="">
                 <img
-                  className="w-14 h-14"
+                  className="w-10 h-10 md:w-14 md:h-14"
                   src={recommend.profilePic}
                   alt={recommend.fullName}
                 />
               </div>
               <div className="">
-                <h3 className="text-lg font-bold">
+                <h3
+                  className="text-sm md:text-lg font-bold hover:underline"
+                >
                   {recommend.fullName.split("")[0].toUpperCase() +
                     recommend.fullName.slice(1)}
                 </h3>
-                <p className="text-[10px] flex items-center gap-1 line-clamp-1">
-                  <MapPin className="size-3" /> {recommend.location}
+                {/* small screen */}
+                <p className="text-[10px] flex items-center gap-1 line-clamp-1  md:hidden">
+                  <MapPin className="size-3" />{" "}
+                  {`${recommend.location.split(" ")[0]}`}
+                </p>
+                {/* large screen */}
+                <p className="text-[10px] md:flex items-center gap-1 line-clamp-1 hidden">
+                  <MapPin className="size-3" /> {`${recommend.location}`}
                 </p>
               </div>
             </div>

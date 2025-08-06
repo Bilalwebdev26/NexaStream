@@ -25,6 +25,19 @@ export const getRecomendedUsers = async (req, res) => {
       .json({ message: "Error while getting Recomended users." });
   }
 };
+//TODO : make a user route which get by id
+export const getById = async (req, res) => {
+  try {
+    const user = await User.findById(req.params.id).select("-password");
+    if (!user) {
+      return res.status(404).json({ message: "User Not found" });
+    }
+    return res.status(200).json({ message: "User Found SuccessFully", user });
+  } catch (error) {
+    console.log(error);
+    return res.status(500).json({ message: "Error while getting user." });
+  }
+};
 export const getFriends = async (req, res) => {
   try {
     const user = await User.findById(req.user._id)
@@ -80,7 +93,7 @@ export const sendFriendRequest = async (req, res) => {
     const checkReq = await FriendRequest.findOne({
       $or: [
         { sender: currentUser._id, recipient: recieverUser._id },
-        { sender: recieverUser._id, recipient: currentUser._id },
+        // { sender: recieverUser._id, recipient: currentUser._id },
       ],
     });
     if (checkReq) {
@@ -174,7 +187,7 @@ export const getOutgoingRequest = async (req, res) => {
       "recipient",
       "fullName profilePic nativeLanguage learningLanguage"
     );
-    if (!outgoingReq.length) {
+    if (outgoingReq.length === 0) {
       return res.status(200).json({ message: "No Outgoing Request." });
     }
     return res

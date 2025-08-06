@@ -47,3 +47,23 @@
 .scrollbar-hide::-webkit-scrollbar {
   display: none;
 }
+.horizontal-scroll-wrapper {
+  width: 100%;
+  display: flex;
+  justify-content: center;
+  position: relative;
+}
+
+.horizontal-scroll {
+  overflow-x: auto;
+  max-width: 80%; /* 👈 Scrollbar container width 80% */
+  white-space: nowrap;
+}
+
+.horizontal-scroll::-webkit-scrollbar {
+  height: 6px;
+}
+.horizontal-scroll::-webkit-scrollbar-thumb {
+  background-color: rgba(255, 255, 255, 0.4);
+  border-radius: 4px;
+}

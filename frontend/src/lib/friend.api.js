@@ -23,3 +23,13 @@ export const sendFriendRequest = async (id) => {
     return null
   }
 };
+export const getUserById = async(id)=>{
+  try {
+    const res = await axiosInstance.get(`/users/profile/${id}`)
+    console.log("Profile Data after : ",res.data)
+    return res.data.user
+  } catch (error) {
+    console.log("Error in Get user Req : ",error)
+    return null
+  }
+}

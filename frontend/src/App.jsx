@@ -50,7 +50,7 @@ const App = () => {
             element={!isAuthenticated ? <Register /> : <Navigate to={"/"} />}
           />
           <Route
-            path="/friend/:id"
+            path="/profile/:id"
             element={isAuthenticated ? (
               <Layout showsidebar={showsidebar}>
                 <Profile /> 

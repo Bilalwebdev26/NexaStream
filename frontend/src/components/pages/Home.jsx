@@ -117,7 +117,7 @@ import {
   showRecommendation,
 } from "../../lib/friend.api";
 import { Link } from "react-router"; // ✅ Correct import
-import { CheckCircle, UsersRound } from "lucide-react";
+import { BellDotIcon, CheckCircle, UsersRound } from "lucide-react";
 import FriendCard from "../UserCom/FriendCard";
 import { useSideBarStore } from "../../store/globalState";
 import FriendSkeleton from "../UserCom/FriendSkeleton";
@@ -190,15 +190,26 @@ const Home = () => {
       <div className={`w-full  `}>
         <div className="space-y-10 pt-6">
           <div className="">
-            <div className="flex items-center justify-between poppins-font">
+            <div className="flex items-center justify-between poppins-font px-2">
               <h2 className="text-xl lg:text-2xl font-bold ">My Friends</h2>
-              <Link
-                to={"/"}
-                className="flex items-center gap-2 border border-secondary rounded-3xl px-3 py-1"
-              >
-                <UsersRound className="size-4" />
-                <span className="text-sm font-bold ">Friend Requests</span>
-              </Link>
+              <div className="flex items-center justify-center gap-2">
+                <Link
+                  to={"/friends"}
+                  className="flex items-center gap-2 border border-secondary rounded-3xl px-3 py-1"
+                >
+                  <UsersRound className="size-3 lg:size-4" />
+                  <span className="text-xs lg:text-sm font-bold ">Friends</span>
+                </Link>
+                <Link
+                  to={"/notification"}
+                  className="flex items-center gap-2 border border-secondary rounded-3xl px-3 py-1 md:hidden"
+                >
+                  <BellDotIcon className="size-3 lg:size-4" />
+                  <span className="text-xs lg:text-sm font-bold ">
+                    Notification
+                  </span>
+                </Link>
+              </div>
             </div>
           </div>
           <div className="w-full">
@@ -207,8 +218,21 @@ const Home = () => {
               <div className="">
                 <FriendSkeleton />
               </div>
-            ) : friends?.friends?.length === 0 ? (
-              <div className="text-white">No Friends You Have</div>
+            ) : friends.friends.length === 0 ? (
+              <div className="flex justify-center h-36">
+                <div className="mx-auto w-full bg-base-300 flex flex-col p-2 items-center justify-center">
+                  <span className="text-2xl text-base/30 font-bold my-3 text-center">
+                    You Don't Have Friends yet
+                  </span>
+                  <p className="text-xs md:text-sm mb-3 text-center">
+                    Start connecting with others by sending friend requests!
+                  </p>
+
+                  <button className=" border px-4 py-2 rounded-lg hover:bg-gradient-to-tr from-primary to-secondary transition-all duration-200 hover:text-black hover:scale-95 hover:font-bold hover:border-none">
+                    Find Friends
+                  </button>
+                </div>
+              </div>
             ) : (
               <div className="">
                 <FriendCard friends={friends} />

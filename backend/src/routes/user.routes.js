@@ -2,6 +2,7 @@ import express from "express";
 import { protectedRoute } from "../middleware/auth.middleware.js";
 import {
   acceptRequest,
+  getById,
   getFriends,
   getOutgoingRequest,
   getRecomendedUsers,
@@ -11,6 +12,7 @@ import {
 const router = express.Router();
 router.use(protectedRoute);
 router.get("/recomended", getRecomendedUsers);
+router.get("/profile/:id",getById)
 router.get("/myfriends", getFriends);
 router.post("/sendfriendreq/:id",sendFriendRequest)
 router.put("/acceptrequest/:id",acceptRequest)

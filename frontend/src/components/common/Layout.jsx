@@ -54,18 +54,16 @@ import NavBar from "./NavBar";
 
 const Layout = ({ children, showsidebar }) => {
   return (
-    <div className="min-h-screen flex flex-row">
-      {/* Sidebar */}
+    <div className="min-h-screen bg-base-200 w-screen flex flex-row">
       {/* {showsidebar && ( */}
         <div className="">
           <SideBar />
         </div>
       {/* )} */}
-
       {/* Main Area */}
       <div className="flex-1 flex flex-col">
         <NavBar />
-        <main className="flex-1 overflow-y-auto">{children}</main>
+        <main className="flex-1 overflow-y-auto ">{children}</main>
       </div>
     </div>
   );

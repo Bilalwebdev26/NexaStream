@@ -1,10 +1,17 @@
 import React from "react";
 import useAuthUser from "../../hooks/useAuthUser";
-import { Link, useLocation } from "react-router";
+import { Link, useLocation, useNavigate } from "react-router";
 import { useMutation, useQueryClient } from "@tanstack/react-query";
 import { logout } from "../../lib/auth.api";
 import toast from "react-hot-toast";
-import { BellIcon, LogOut, ShipWheelIcon } from "lucide-react";
+import {
+  BellIcon,
+  Hamburger,
+  HamburgerIcon,
+  LogOut,
+  Menu,
+  ShipWheelIcon,
+} from "lucide-react";
 import ThemeSelector from "./ThemeSelector";
 import { useSideBarStore } from "../../store/globalState";
 import SideBar from "./SideBar";
@@ -12,6 +19,7 @@ import SideBar from "./SideBar";
 const NavBar = () => {
   const { authUser } = useAuthUser();
   const location = useLocation();
+  const navigate = useNavigate()
   const chatPage = location.pathname?.startsWith("/chat");
   const queryClient = useQueryClient();
   const { showsidebar, setsideBar } = useSideBarStore();
@@ -25,34 +33,32 @@ const NavBar = () => {
   const handleLogout = () => {
     mutate();
   };
+  const handleBars = () => {
+    setsideBar(!showsidebar)
+  };
   return (
-    <nav className="bg-base-200 w-full border-b border-base-300 top-0 z-30 h-16 flex items-center poppins-font relative">
-      <div className="container mx-auto px-4 sm:px-6 lg:px-8 w-full">
-        <div
-          className={`flex items-center justify-between`}
-        >
+    <nav className="bg-base-200 w-screen border-b border-base-300 top-0 z-30 h-16 flex items-center poppins-font relative">
+      <div className="container px-1 sm:px-6 lg:px-8 w-full">
+        <div className={`flex items-center justify-between`}>
           {/* {!showsidebar && ( */}
-            <div className="">
-              <Link
-                
-                className="flex items-center  gap-2.5"
+          <div className="">
+            <Link className="flex items-center  gap-2.5" to={"/"}>
+              <ShipWheelIcon className="size-5 lg:size-9 text-primary" />
+              <span
+                // onClick={() => setsideBar(true)}
+                className="text-lg lg:text-3xl font-bold bg-clip-text text-transparent bg-gradient-to-r from-primary to-secondary tracking-wider"
               >
-                <ShipWheelIcon className="size-5 lg:size-9 text-primary" />
-                <span
-                  onClick={() => setsideBar(true)}
-                  className="text-lg lg:text-3xl font-bold bg-clip-text text-transparent bg-gradient-to-r from-primary to-secondary tracking-wider"
-                >
-                  nexaStream
-                </span>
-              </Link>
-            </div>
+                nexaStream
+              </span>
+            </Link>
+          </div>
           {/* )} */}
 
           {/* ------------------------- */}
-          <div className="flex items-center justify-end ">
+          <div className="flex items-center space-x-1 lg:space-x-2 ">
             <Link to={"/notification"} className="btn btn-ghost btn-circle">
               {/* <button className="btn btn-ghost btn-circle flex items-center"> */}
-              <BellIcon className="" />
+              <BellIcon className="hidden md:block" />
               {/* </button> */}
             </Link>
 
@@ -67,6 +73,10 @@ const NavBar = () => {
                 />
               </div>
             </div>
+            {/* Hamburger */}
+            <div onClick={handleBars} className="btn btn-ghost btn-circle">
+              <Menu />
+            </div>
             {/* Logout */}
             <div className="">
               <div className="btn btn-ghost btn-circle" onClick={handleLogout}>
@@ -76,7 +86,6 @@ const NavBar = () => {
           </div>
         </div>
       </div>
-      
     </nav>
   );
 };
