@@ -8,9 +8,12 @@ import {
   CrossIcon,
   Mail,
   MapPin,
+  Mars,
   Send,
   UserRoundPlus,
   UserRoundX,
+  Venus,
+  VenusAndMars,
   X,
 } from "lucide-react";
 import useAuthUser from "../../hooks/useAuthUser";
@@ -127,26 +130,35 @@ const Profile = () => {
             {/*Email + Location + Gender */}
             {/* Email */}
             <div className="px-10 flex items-center flex-col gap-2 justify-center space-y-3 ">
-              <div className="w-1/2">
+              <div className="w-full md:w-1/2">
                 <label htmlFor="">Email</label>
-                <div className="w-full flex items-center gap-2 p-2 border-2 border-secondary rounded-md">
+                <div className="w-full flex items-center gap-2 p-2 border-2 border-primary rounded-md">
                   <Mail className="text-secondary" />
                   <h3 className="font-semibold">{user?.email}</h3>
                 </div>
               </div>
               {/* location */}
-              <div className="w-1/2">
+              <div className="w-full md:w-1/2">
                 <label htmlFor="">Location</label>
-                <div className="w-full flex items-center gap-2 p-2 border-2 border-primary rounded-md">
+                <div className="w-full flex items-center gap-2 p-2 border-2 border-secondary rounded-md">
                   <MapPin className="text-primary" />
                   <h3 className="font-semibold">{user?.location}</h3>
                 </div>
               </div>
               {/* Gender */}
-              <div className="w-1/2">
+              <div className="w-full md:w-1/2">
                 <label htmlFor="">Gender</label>
                 <div className="w-full flex items-center gap-2 p-2 border-2 border-primary rounded-md">
-                  <MapPin className="text-primary" />
+                  {user?.gender === "male" && (
+                    <Mars className="text-blue-500" />
+                  )}
+                  {user?.gender === "female" && (
+                    <Venus className="text-pink-500" />
+                  )}
+                  {user?.gender === "Prefer not to say" && (
+                    <VenusAndMars className="text-purple-500" />
+                  )}
+
                   <h3 className="font-semibold">{user?.gender}</h3>
                 </div>
               </div>
