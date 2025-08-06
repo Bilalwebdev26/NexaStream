@@ -33,7 +33,7 @@ const FriendCard = ({ friends }) => {
           >
             {/* Img + Name */}
             <div
-              className="flex items-center gap-3 mb-3 mt-3"
+              className="flex items-center gap-3 mb-3 mt-3 cursor-pointer"
               onClick={() => handleProfile(friend._id)}
             >
               <img
@@ -41,7 +41,7 @@ const FriendCard = ({ friends }) => {
                 src={friend.profilePic}
                 alt={friend.fullName}
               />
-              <span className="text-base lg:text-xl font-bold text-black">
+              <span className="text-base lg:text-xl font-bold text-black hover:underline">
                 {friend.fullName}
               </span>
             </div>

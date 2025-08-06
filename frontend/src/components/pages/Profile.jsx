@@ -63,22 +63,35 @@ const Profile = () => {
     <div className="w-screen mt-2 poppins-font">
       <div className="w-full px-2 bg-base-300">
         {userLoading ? (
-          <div className="w-screen mt-10 px-4 space-y-6 animate-pulse">
-            <div className="h-8 w-1/2 bg-gray-300 rounded-md"></div>
-            <div className="flex items-center justify-between md:px-4 lg:px-10 mb-6">
-              <div className="flex items-center gap-3">
+          <div className="w-screen mt-10 px-4 animate-pulse space-y-8">
+            {/* Heading */}
+            <div className="h-10 w-1/3 bg-gray-300 rounded-md"></div>
+
+            {/* Top section - Image + Name + Friends */}
+            <div className="flex items-center justify-between md:px-4 lg:px-10">
+              {/* Image + Name */}
+              <div className="flex items-center gap-4">
                 <div className="w-20 h-20 bg-gray-300 rounded-full"></div>
                 <div className="h-6 w-32 bg-gray-300 rounded-md"></div>
               </div>
+              {/* Friends */}
               <div className="w-24 h-14 bg-gray-300 rounded-md"></div>
             </div>
-            <div className="flex flex-col md:flex-row gap-4 px-4">
-              <div className="w-full md:w-1/2 h-12 bg-gray-300 rounded-md"></div>
-              <div className="w-full md:w-1/2 h-12 bg-gray-300 rounded-md"></div>
+
+            {/* Email, Location, Gender */}
+            <div className="flex flex-col items-center gap-6">
+              {[1, 2, 3].map((_, i) => (
+                <div
+                  key={i}
+                  className="w-1/2 h-12 bg-gray-300 rounded-md"
+                ></div>
+              ))}
             </div>
+
+            {/* Buttons */}
             <div className="flex justify-center gap-4 my-6">
-              <div className="w-36 h-10 bg-gray-300 rounded-lg"></div>
-              <div className="w-36 h-10 bg-gray-300 rounded-lg"></div>
+              <div className="w-28 h-10 bg-gray-300 rounded-lg"></div>
+              <div className="w-28 h-10 bg-gray-300 rounded-lg"></div>
             </div>
           </div>
         ) : (
@@ -112,7 +125,7 @@ const Profile = () => {
               </div>
             </div>
             {/*Email + Location + Gender */}
-             {/* Email */}
+            {/* Email */}
             <div className="px-10 flex items-center flex-col gap-2 justify-center space-y-3 ">
               <div className="w-1/2">
                 <label htmlFor="">Email</label>
