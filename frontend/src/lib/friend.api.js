@@ -16,6 +16,7 @@ export const showOutgoingRequest = async () => {
 };
 export const sendFriendRequest = async (id) => {
   try {
+    console.log("Send Friend Req Call")
     const res = await axiosInstance.post(`/users/sendfriendreq/${id}`);
     return res.data;
   } catch (error) {

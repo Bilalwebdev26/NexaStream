@@ -1,11 +1,16 @@
-import { useQuery } from "@tanstack/react-query";
+import { useMutation, useQuery, useQueryClient } from "@tanstack/react-query";
 import React, { useEffect, useState } from "react";
-import { useParams } from "react-router";
-import { getUserById, showOutgoingRequest } from "../../lib/friend.api";
+import { useNavigate, useParams } from "react-router";
+import {
+  getUserById,
+  sendFriendRequest,
+  showOutgoingRequest,
+} from "../../lib/friend.api";
 import {
   Ban,
   CircleCheck,
   CrossIcon,
+  Loader,
   Mail,
   MapPin,
   Mars,
@@ -21,8 +26,10 @@ import useAuthUser from "../../hooks/useAuthUser";
 const Profile = () => {
   const [checkReqSended, setCheckReqSent] = useState({});
   const [friendCheck, setFriendCheck] = useState({});
+  const queryClient = useQueryClient();
+  const navigate = useNavigate()
   const { id } = useParams();
-  console.log("Id :",id)
+  console.log("Id :", id);
   const { authUser } = useAuthUser();
   const {
     data: user,
@@ -38,7 +45,18 @@ const Profile = () => {
     isPending: outgoingLoading,
     error: outgoingError,
   } = useQuery({
+    queryKey: ["showRequest"],
     queryFn: showOutgoingRequest,
+  });
+  const {
+    mutate,
+    isPending: sendReqLoading,
+    error,
+  } = useMutation({
+    mutationFn: sendFriendRequest,
+    onSuccess: () => {
+      queryClient.invalidateQueries({ queryKey: ["showRequest"] });
+    },
   });
 
   useEffect(() => {
@@ -56,6 +74,15 @@ const Profile = () => {
       setFriendCheck(friend);
     }
   }, [outgoingReq, user, authUser]);
+  const handleSendReq = (id) => {
+    if (!id) return;
+    console.log("Id : ", id);
+    mutate(id);
+  };
+  const handleChat = (id)=>{
+    if(!id) return
+    navigate(`/chat/${id}`)
+  }
 
   console.log("Show Outgoing Req : ", outgoingReq);
   console.log("user", user);
@@ -167,10 +194,10 @@ const Profile = () => {
             {/* And If Friends req sent show request sent with cancel request button */}
             {checkReqSended ? (
               <div className="flex items-center gap-2 justify-center w-full space-x-2 my-3">
-                <button className="flex items-center p-2 border-primary border-2 rounded-lg gap-2 my-5 bg-green-600/10 hover:scale-95 transition-all duration-200">
+                <button className="flex items-center p-2 border-primary border-2 rounded-lg gap-2 my-5 bg-green-600/10 cursor-not-allowed transition-all duration-200">
                   <CircleCheck className="size-6 text-white" />
                   <span className="text-sm text-white font-semibold">
-                    Already Sent
+                    Request Sent
                   </span>
                 </button>
                 <button className="flex items-center p-2 border-secondary border-2 rounded-lg gap-2 bg-red-600 hover:scale-95 transition-all duration-200">
@@ -182,11 +209,22 @@ const Profile = () => {
               </div>
             ) : !checkReqSended && !friendCheck ? (
               <div className="flex items-center gap-2 justify-center w-full space-x-2 my-3">
-                <button className="flex items-center p-2 border-primary border-2 rounded-lg gap-2 my-5 bg-green-600 hover:scale-95 transition-all duration-200">
-                  <UserRoundPlus className="size-6 text-white" />
-                  <span className="text-sm text-white font-semibold">
-                    Send request
-                  </span>
+                <button
+                  onClick={() => handleSendReq(user?._id)}
+                  className="flex items-center p-2 border-primary border-2 rounded-lg gap-2 my-5 bg-green-600 hover:scale-95 transition-all duration-200"
+                >
+                  {sendReqLoading ? (
+                    <div className="flex items-center justify-center w-32">
+                      <Loader  className="animate-spin size-5 text-black font-semibold"/>
+                    </div>
+                  ) : (
+                    <>
+                      <UserRoundPlus className="size-6 text-white" />
+                      <span className="text-sm text-white font-semibold">
+                        Send request
+                      </span>
+                    </>
+                  )}
                 </button>
                 <button className="flex items-center p-2 border-secondary border-2 rounded-lg gap-2 bg-red-600 hover:scale-95 transition-all duration-200">
                   <Ban className="size-6 text-white" />
@@ -197,7 +235,7 @@ const Profile = () => {
               </div>
             ) : (
               <div className="flex items-center gap-2 justify-center w-full space-x-2 my-3">
-                <button className="flex items-center p-2 border-primary border-2 rounded-lg gap-2 my-5 bg-green-600 hover:scale-95 transition-all duration-200">
+                <button onClick={()=>{handleChat(user?._id)}} className="flex items-center p-2 border-primary border-2 rounded-lg gap-2 my-5 bg-green-600 hover:scale-95 transition-all duration-200">
                   <Send className="size-6 text-white" />
                   <span className="text-sm text-white font-semibold">
                     Message
