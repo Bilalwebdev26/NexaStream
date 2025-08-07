@@ -17,7 +17,7 @@ const Friends = () => {
   const navigate = useNavigate();
   console.log("Show Friends : ", friends);
   const handleNavigate = (id) => {
-    3;
+    window.location.reload(); // force full refresh
     navigate(`/profile/${id}`);
   };
   return (

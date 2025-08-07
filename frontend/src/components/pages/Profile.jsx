@@ -22,17 +22,16 @@ const Profile = () => {
   const [checkReqSended, setCheckReqSent] = useState({});
   const [friendCheck, setFriendCheck] = useState({});
   const { id } = useParams();
+  console.log("Id :",id)
   const { authUser } = useAuthUser();
   const {
     data: user,
     isPending: userLoading,
     error: userError,
   } = useQuery({
-    queryKey: ["getUserById"],
+    queryKey: ["getUserById", id],
     queryFn: () => getUserById(id),
-    onSuccess: () => {
-      alert("We get you");
-    },
+    //keepPreviousData: false, // ⛔ don't keep old profile when switching ID
   });
   const {
     data: outgoingReq,
@@ -43,8 +42,8 @@ const Profile = () => {
   });
 
   useEffect(() => {
-    if (!outgoingLoading) {
-      console.log(outgoingReq[0]?.sender.toString());
+    if (!outgoingLoading && !userLoading) {
+      // console.log(outgoingReq[0]?.sender.toString());
       const checkReqSend = outgoingReq?.find(
         (out) => out.recipient._id.toString() === user?._id.toString()
       );
@@ -56,7 +55,7 @@ const Profile = () => {
       setCheckReqSent(checkReqSend);
       setFriendCheck(friend);
     }
-  }, [outgoingReq, user]);
+  }, [outgoingReq, user, authUser]);
 
   console.log("Show Outgoing Req : ", outgoingReq);
   console.log("user", user);
@@ -65,7 +64,7 @@ const Profile = () => {
   return (
     <div className="w-screen mt-2 poppins-font">
       <div className="w-full px-2 bg-base-300">
-        {userLoading ? (
+        {userLoading && outgoingLoading ? (
           <div className="w-screen mt-10 px-4 animate-pulse space-y-8">
             {/* Heading */}
             <div className="h-10 w-1/3 bg-gray-300 rounded-md"></div>
@@ -123,7 +122,7 @@ const Profile = () => {
                   className="bg-gradient-to-tl from-primary/20 to-secondary/10 border-base-300  border-3 p-2 rounded-md w-24 flex items-center flex-col"
                 >
                   <span className="text-center font-bold">Friends</span>
-                  <p className="text-center">{user?.friends?.length}</p>
+                  <p className="text-center">{user?.friends.length}</p>
                 </div>
               </div>
             </div>

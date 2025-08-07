@@ -15,7 +15,7 @@ const RecommendUser = ({ recommendUsers }) => {
   const [outgoingReqIds, setOutgoingReqIds] = useState(new Set());
   const [loadingId, setLoadingId] = useState(null);
   const queryClient = useQueryClient();
-  const naviagte = useNavigate();
+  const navigate = useNavigate();
   // Outgoing Requests
   const {
     data: showRequest,
@@ -48,7 +48,8 @@ const RecommendUser = ({ recommendUsers }) => {
   console.log("Fetch create Outgoing : ", showRequest);
   const HandleProfile = (id) => {
     if (!id) return null;
-    naviagte(`/profile/${id}`);
+    navigate(`/profile/${id}`);
+    window.location.reload(); // force full refresh
   };
 
   const getLangFlag = (lang) => {
