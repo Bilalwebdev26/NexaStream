@@ -80,11 +80,11 @@ const Friends = () => {
                   </div>
                   {/* Message+Remove */}
                   <div className="flex items-center gap-2">
-                    <button className="bg-white text-black rounded-lg px-2 py-1 text-sm font-semibold hover:scale-95 duration-200 transition-all">
+                    <button className="bg-white text-black rounded-md px-2 py-1 text-xs font-semibold hover:scale-95 duration-200 transition-all">
                       Message
                     </button>
-                    <button className="bg-red-600 text-white rounded-lg px-2 py-1 text-sm font-semibold hover:scale-95 duration-200 transition-all">
-                      Remove
+                    <button className="bg-red-600 text-white rounded-md px-2 py-1 text-xs font-semibold hover:scale-95 duration-200 transition-all">
+                      UnFollow
                     </button>
                   </div>
                 </div>

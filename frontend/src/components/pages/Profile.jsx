@@ -2,9 +2,11 @@ import { useMutation, useQuery, useQueryClient } from "@tanstack/react-query";
 import React, { useEffect, useState } from "react";
 import { useNavigate, useParams } from "react-router";
 import {
+  cancelFriendReq,
   getUserById,
   sendFriendRequest,
   showOutgoingRequest,
+  unfollow,
 } from "../../lib/friend.api";
 import {
   Ban,
@@ -27,7 +29,7 @@ const Profile = () => {
   const [checkReqSended, setCheckReqSent] = useState({});
   const [friendCheck, setFriendCheck] = useState({});
   const queryClient = useQueryClient();
-  const navigate = useNavigate()
+  const navigate = useNavigate();
   const { id } = useParams();
   console.log("Id :", id);
   const { authUser } = useAuthUser();
@@ -58,6 +60,28 @@ const Profile = () => {
       queryClient.invalidateQueries({ queryKey: ["showRequest"] });
     },
   });
+  const {
+    mutate: deleteReq,
+    isPending: deleteReqLoading,
+    error: deleteReqError,
+  } = useMutation({
+    mutationFn: cancelFriendReq,
+    onSuccess: () => {
+      queryClient.invalidateQueries({ queryKey: ["showRequest"] });
+      // alert("Req Cancel SuccessFully");
+    },
+  });
+  const {
+    mutate: mutateUnfollow,
+    isPending: laodingUnfollow,
+    error: errorUnfollow,
+  } = useMutation({
+    mutationFn: unfollow,
+    onSuccess: () => {
+      queryClient.invalidateQueries({ queryKey: ["showRequest"] });
+       queryClient.invalidateQueries({ queryKey: ["getUserById", id] }); // 👈 Add this
+    },
+  });
 
   useEffect(() => {
     if (!outgoingLoading && !userLoading) {
@@ -73,16 +97,24 @@ const Profile = () => {
       setCheckReqSent(checkReqSend);
       setFriendCheck(friend);
     }
-  }, [outgoingReq, user, authUser]);
+  }, [outgoingReq, user, authUser,mutateUnfollow]);
   const handleSendReq = (id) => {
     if (!id) return;
     console.log("Id : ", id);
     mutate(id);
   };
-  const handleChat = (id)=>{
-    if(!id) return
-    navigate(`/chat/${id}`)
-  }
+  const handleChat = (id) => {
+    if (!id) return;
+    navigate(`/chat/${id}`);
+  };
+  const handleDeleteReq = (id) => {
+    if (!id) return;
+    deleteReq(id);
+  };
+  const handleUnfollowUser = (id) => {
+    if (!id) return;
+    mutateUnfollow(id);
+  };
 
   console.log("Show Outgoing Req : ", outgoingReq);
   console.log("user", user);
@@ -200,11 +232,24 @@ const Profile = () => {
                     Request Sent
                   </span>
                 </button>
-                <button className="flex items-center p-2 border-secondary border-2 rounded-lg gap-2 bg-red-600 hover:scale-95 transition-all duration-200">
-                  <X className="size-6 text-white" />
-                  <span className="text-sm text-white font-semibold">
-                    Cancel Request
-                  </span>
+                <button
+                  onClick={() => {
+                    handleDeleteReq(user?._id);
+                  }}
+                  className="flex items-center p-2 border-secondary border-2 rounded-lg gap-2 bg-red-600 hover:scale-95 transition-all duration-200"
+                >
+                  {deleteReqLoading ? (
+                    <div className="flex items-center justify-center w-32">
+                      <Loader className="animate-spin size-5 text-black font-semibold" />
+                    </div>
+                  ) : (
+                    <>
+                      <X className="size-6 text-white" />
+                      <span className="text-sm text-white font-semibold">
+                        Cancel Request
+                      </span>
+                    </>
+                  )}
                 </button>
               </div>
             ) : !checkReqSended && !friendCheck ? (
@@ -215,7 +260,7 @@ const Profile = () => {
                 >
                   {sendReqLoading ? (
                     <div className="flex items-center justify-center w-32">
-                      <Loader  className="animate-spin size-5 text-black font-semibold"/>
+                      <Loader className="animate-spin size-5 text-black font-semibold" />
                     </div>
                   ) : (
                     <>
@@ -235,17 +280,33 @@ const Profile = () => {
               </div>
             ) : (
               <div className="flex items-center gap-2 justify-center w-full space-x-2 my-3">
-                <button onClick={()=>{handleChat(user?._id)}} className="flex items-center p-2 border-primary border-2 rounded-lg gap-2 my-5 bg-green-600 hover:scale-95 transition-all duration-200">
+                <button
+                  onClick={() => {
+                    handleChat(user?._id);
+                  }}
+                  className="flex items-center p-2 border-primary border-2 rounded-lg gap-2 my-5 bg-green-600 hover:scale-95 transition-all duration-200"
+                >
                   <Send className="size-6 text-white" />
                   <span className="text-sm text-white font-semibold">
                     Message
                   </span>
                 </button>
-                <button className="flex items-center p-2 border-secondary border-2 rounded-lg gap-2 bg-red-600 hover:scale-95 transition-all duration-200">
-                  <UserRoundX className="size-6 text-white" />
-                  <span className="text-sm text-white font-semibold">
-                    UnFollow
-                  </span>
+                <button
+                  onClick={() => handleUnfollowUser(user?._id)}
+                  className="flex items-center p-2 border-secondary border-2 rounded-lg gap-2 bg-red-600 hover:scale-95 transition-all duration-200"
+                >
+                  {laodingUnfollow ? (
+                    <div className="flex items-center justify-center w-32">
+                      <Loader className="animate-spin size-5 text-black font-semibold" />
+                    </div>
+                  ) : (
+                    <>
+                      <UserRoundX className="size-6 text-white" />
+                      <span className="text-sm text-white font-semibold">
+                        UnFollow
+                      </span>
+                    </>
+                  )}
                 </button>
               </div>
             )}

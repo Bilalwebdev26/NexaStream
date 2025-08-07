@@ -91,12 +91,14 @@ export const sendFriendRequest = async (req, res) => {
     }
     //check already req send to nahi ha ->DB query
     const checkReq = await FriendRequest.findOne({
-      $or: [
-        { sender: currentUser._id, recipient: recieverUser._id },
-        // { sender: recieverUser._id, recipient: currentUser._id },
-      ],
+      // $or: [
+      sender: currentUser._id,
+      recipient: recieverUser._id,
+      // { sender: recieverUser._id, recipient: currentUser._id },
+      // ],
     });
     if (checkReq) {
+      console.log(checkReq)
       return res.status(400).json({ message: "Already Friends Request Sent." });
     }
     //set ker do request ko ->new request
@@ -198,5 +200,70 @@ export const getOutgoingRequest = async (req, res) => {
     return res
       .status(500)
       .json({ message: "Error while show Outgoing Requests." });
+  }
+};
+export const cancelSendRequest = async (req, res) => {
+  try {
+    console.log("Rec ID : ", req.params.id);
+    console.log("Sender ID : ", req.user._id);
+    const cancel = await FriendRequest.findOne({
+      sender: req.user._id,
+      recipient: req.params.id,
+      status: "pending",
+    });
+    if (!cancel) {
+      return res.status(404).json({ message: "Req is Not Presented" });
+    }
+    console.log("Req canceled Successfully", cancel);
+    await FriendRequest.findByIdAndDelete(cancel._id);
+    return res.status(200).json({ message: "Req Canceled SuccessFully" });
+  } catch (error) {
+    console.log(error);
+    return res.status(500).json({ message: "Error while show Request." });
+  }
+};
+export const unFollow = async (req, res) => {
+  try {
+    const check = await FriendRequest.findOne({
+      status: "accepted",
+      $or: [
+        { sender: req.user._id, recipient: req.params.id },
+        { sender: req.params.id, recipient: req.user._id },
+      ],
+    });
+    if (!check) {
+      return res.status(400).json({ message: "You Are not Friend" });
+    }
+    await FriendRequest.findByIdAndDelete(check._id)
+    // const senderOne = await User.findById(req.user._id);
+    // const recieverOne = await User.findById(req.params.id);
+    // if (!senderOne) {
+    //   return res.status(404).json({ message: "Sender not exist" });
+    // }
+    // if (!recieverOne) {
+    //   return res.status(404).json({ message: "Reciver not exist" });
+    // }
+    // senderOne.friends = senderOne.friends.filter(
+    //   (frnd) => frnd.toString() !== recieverOne._id.toString()
+    // );
+    // recieverOne.friends = recieverOne.friends.filter(
+    //   (frnd) => frnd.toString() !== senderOne._id.toString()
+    // );
+    // await senderOne.save();
+    // await recieverOne.save();
+    // Step 2: Remove each other from friends list using $pull
+    const sender = await User.findByIdAndUpdate(req.user._id, {
+      $pull: { friends: req.params.id },
+    });
+
+    const reciver = await User.findByIdAndUpdate(req.params.id, {
+      $pull: { friends: req.user._id },
+    });
+    return res
+      .status(200)
+      .json({ message: "UnFollow SuccessFully", sender, reciver });
+  } catch (error) {
+    console.log(error);
+    return res.status(500).json({ message: "Error while show Request." });
   }
 };
