@@ -98,7 +98,7 @@ export const sendFriendRequest = async (req, res) => {
       // ],
     });
     if (checkReq) {
-      console.log(checkReq)
+      console.log(checkReq);
       return res.status(400).json({ message: "Already Friends Request Sent." });
     }
     //set ker do request ko ->new request
@@ -234,7 +234,7 @@ export const unFollow = async (req, res) => {
     if (!check) {
       return res.status(400).json({ message: "You Are not Friend" });
     }
-    await FriendRequest.findByIdAndDelete(check._id)
+    await FriendRequest.findByIdAndDelete(check._id);
     // const senderOne = await User.findById(req.user._id);
     // const recieverOne = await User.findById(req.params.id);
     // if (!senderOne) {
@@ -267,3 +267,27 @@ export const unFollow = async (req, res) => {
     return res.status(500).json({ message: "Error while show Request." });
   }
 };
+// Todo reject req
+//->Object ->Id
+//login -> Id && Req User -> Id lelo status===pending
+export const rejectReq = async (req, res) => {
+  try {
+    const deleteReq = await FriendRequest.findByIdAndDelete(req.params.id);
+    if (!deleteReq) {
+      return res.status(400).json({ message: "Failed to reject request" });
+    }
+    return res.status(200).json({ message: "Request rejected SuccessFully" });
+  } catch (error) {
+    console.log(error);
+    return res.status(500).json({ message: "Error while show Request." });
+  }
+};
+
+export const searchBar = async(req,res)=>{
+  const{data}=req.query
+  try {
+    const search = await User.find({})
+  } catch (error) {
+    
+  }
+}

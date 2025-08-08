@@ -37,8 +37,8 @@ const NavBar = () => {
     setsideBar(!showsidebar)
   };
   return (
-    <nav className="bg-base-200 w-screen border-b border-base-300 top-0 z-30 h-16 flex items-center poppins-font relative">
-      <div className="container px-1 sm:px-6 lg:px-8 w-full">
+    <nav className=" w-screen border-b border-base-300 top-0 z-30 h-16 flex items-center poppins-font relative">
+      <div className="container px-1 sm:px-2 lg:px-4 w-full">
         <div className={`flex items-center justify-between`}>
           {/* {!showsidebar && ( */}
           <div className="">
@@ -56,9 +56,9 @@ const NavBar = () => {
 
           {/* ------------------------- */}
           <div className="flex items-center space-x-1 lg:space-x-2 ">
-            <Link to={"/notification"} className="btn btn-ghost btn-circle">
+            <Link to={"/notification"} className="hidden md:flex items-center justify-center btn btn-ghost btn-circle">
               {/* <button className="btn btn-ghost btn-circle flex items-center"> */}
-              <BellIcon className="hidden md:block" />
+              <BellIcon className="size-6" />
               {/* </button> */}
             </Link>
 

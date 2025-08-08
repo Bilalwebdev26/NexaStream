@@ -7,6 +7,7 @@ import {
   getFriends,
   getOutgoingRequest,
   getRecomendedUsers,
+  rejectReq,
   sendFriendRequest,
   showConnections,
   unFollow,
@@ -22,4 +23,5 @@ router.get("/showconnections",showConnections)
 router.get("/showoutgoing",getOutgoingRequest)
 router.delete("/deletereq/:id",cancelSendRequest)
 router.post("/unfollow/:id",unFollow)
+router.delete("/reject/:id",rejectReq)
 export default router;

@@ -2,6 +2,7 @@ import { useQuery } from "@tanstack/react-query";
 import React from "react";
 import { showFriends } from "../../lib/friend.api";
 import { Link, useNavigate } from "react-router";
+import { Send, UserMinus } from "lucide-react";
 
 const Friends = () => {
   // Friends
@@ -65,7 +66,7 @@ const Friends = () => {
                 <div
                   onClick={() => handleNavigate(friend._id)}
                   key={friend._id}
-                  className="w-full bg-black/90 box-border  px-2 py-4 rounded-lg border flex justify-between cursor-pointer hover:bg-black/70 duration-200 transition-all"
+                  className="w-full bg-base-300 box-border  px-2 py-4 rounded-lg border flex justify-between duration-200 transition-all"
                 >
                   {/* Profile+Name */}
                   <div className="flex items-center gap-2">
@@ -80,11 +81,13 @@ const Friends = () => {
                   </div>
                   {/* Message+Remove */}
                   <div className="flex items-center gap-2">
-                    <button className="bg-white text-black rounded-md px-2 py-1 text-xs font-semibold hover:scale-95 duration-200 transition-all">
+                    <button className="bg-white text-black flex items-center gap-2 rounded-md px-3 py-2 text-xs font-semibold hover:bg-gray-200 duration-200 transition-all">
+                      <Send className="size-5"/>
                       Message
                     </button>
-                    <button className="bg-red-600 text-white rounded-md px-2 py-1 text-xs font-semibold hover:scale-95 duration-200 transition-all">
-                      UnFollow
+                    <button className="bg-red-600 flex items-center gap-2 text-white rounded-md px-3 py-2 text-xs font-semibold hover:bg-red-800 duration-200 transition-all">
+                      <UserMinus className="size-5"/>
+                      Unfriend 
                     </button>
                   </div>
                 </div>

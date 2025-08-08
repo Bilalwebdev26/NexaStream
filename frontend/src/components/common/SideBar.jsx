@@ -1,5 +1,5 @@
 import React, { useState } from "react";
-import { Bell, CircleX, HomeIcon, ShipWheelIcon, Users } from "lucide-react";
+import { Bell, CircleX, HomeIcon, Search, ShipWheelIcon, UserPlus, Users } from "lucide-react";
 import { useLocation, Link } from "react-router";
 import useAuthUser from "../../hooks/useAuthUser";
 import { useSideBarStore } from "../../store/globalState";
@@ -52,7 +52,27 @@ const SideBar = () => {
           }`}
         >
           <Users />
-          <span >Friends</span>
+          <span>Friends</span>
+        </Link>
+        <Link
+          to={"/requests"}
+          onClick={() => setsideBar(!showsidebar)}
+          className={`flex items-center gap-3 justify-start w-full px-3 normal-case btn btn-ghost ${
+            currentLocation === "/requests" ? "btn-active" : ""
+          }`}
+        >
+          <UserPlus />
+          <span>Friend Requests</span>
+        </Link>
+        <Link
+          to={"/search"}
+          onClick={() => setsideBar(!showsidebar)}
+          className={`flex items-center gap-3 justify-start w-full px-3 normal-case btn btn-ghost ${
+            currentLocation === "/search" ? "btn-active" : ""
+          }`}
+        >
+          <Search />
+          <span>Search Friend</span>
         </Link>
         <Link
           to={"/notification"}
@@ -60,10 +80,9 @@ const SideBar = () => {
           className={`flex items-center gap-3 justify-start w-full px-3 normal-case btn btn-ghost ${
             currentLocation === "/notification" ? "btn-active" : ""
           }`}
-          
         >
           <Bell />
-          <span >Notification</span>
+          <span>Notification</span>
         </Link>
       </nav>
       {/* User Profile Section-Online- */}

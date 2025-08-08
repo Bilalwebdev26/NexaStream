@@ -16,6 +16,8 @@ import {usethemeStore} from "./store/themeSelector.js"
 import { useSideBarStore } from "./store/globalState.js";
 import Friends from "./components/pages/Friends.jsx";
 import Profile from "./components/pages/Profile.jsx";
+import Requests from "./components/pages/Requests.jsx";
+import Search from "./components/pages/Search.jsx";
 const App = () => {
   const { isLoading, authUser } = useAuthUser();
   const isAuthenticated = Boolean(authUser);
@@ -66,6 +68,30 @@ const App = () => {
                 ) : (
                   <Navigate to={"/"} />
                 )
+              ) : (
+                <Navigate to={"/login"} />
+              )
+            }
+          />
+          <Route
+            path="/requests"
+            element={
+              isAuthenticated ? (
+                <Layout showsidebar={showsidebar}>
+                  <Requests/>
+                </Layout>
+              ) : (
+                <Navigate to={"/login"} />
+              )
+            }
+          />
+          <Route
+            path="/search"
+            element={
+              isAuthenticated ? (
+                <Layout showsidebar={showsidebar}>
+                  <Search/>
+                </Layout>
               ) : (
                 <Navigate to={"/login"} />
               )
