@@ -75,18 +75,18 @@ const Friends = () => {
                       src={friend.profilePic}
                       alt={friend.fullName}
                     />
-                    <span className="text-sm font-semibold text-white hover:underline">
+                    <span className="text-xs md:text-sm font-semibold text-white hover:underline">
                       {friend.fullName}
                     </span>
                   </div>
                   {/* Message+Remove */}
                   <div className="flex items-center gap-2">
-                    <button className="bg-white text-black flex items-center gap-2 rounded-md px-3 py-2 text-xs font-semibold hover:bg-gray-200 duration-200 transition-all">
-                      <Send className="size-5"/>
+                    <button className="bg-white text-black flex items-center gap-2 rounded-md p-1 md:px-3 md:py-2 text-xs font-semibold hover:bg-gray-200 duration-200 transition-all">
+                      <Send className="size-3 md:size-5"/>
                       Message
                     </button>
-                    <button className="bg-red-600 flex items-center gap-2 text-white rounded-md px-3 py-2 text-xs font-semibold hover:bg-red-800 duration-200 transition-all">
-                      <UserMinus className="size-5"/>
+                    <button className="bg-red-600 flex items-center gap-2 text-white rounded-md p-1 md:px-3 md:py-2 text-xs font-semibold hover:bg-red-800 duration-200 transition-all">
+                      <UserMinus className="size-3 md:size-5"/>
                       Unfriend 
                     </button>
                   </div>

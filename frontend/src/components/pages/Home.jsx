@@ -195,14 +195,14 @@ const Home = () => {
               <div className="flex items-center justify-center gap-2">
                 <Link
                   to={"/friends"}
-                  className="flex items-center gap-2 border border-secondary rounded-3xl px-3 py-1"
+                  className="flex items-center gap-2 border border-secondary rounded-3xl px-1 md:px-3 py-1"
                 >
                   <UsersRound className="size-3 lg:size-4" />
                   <span className="text-xs lg:text-sm font-bold ">Friends</span>
                 </Link>
                 <Link
                   to={"/notification"}
-                  className="flex items-center gap-2 border border-secondary rounded-3xl px-3 py-1 md:hidden"
+                  className="flex items-center gap-2 border border-secondary rounded-3xl px-1 md:px-3 py-1 md:hidden"
                 >
                   <BellDotIcon className="size-3 lg:size-4" />
                   <span className="text-xs lg:text-sm font-bold ">
@@ -244,15 +244,28 @@ const Home = () => {
         {/* Section Recommend User */}
         <section className="my-3 poppins-font">
           <div className="my-2">
-            <h2 className="text-3xl font-bold">Meet New Learners</h2>
-            <p className="text-sm">
+            <h2 className="text-xl md:text-3xl font-bold text-white mt-6">Meet New Learners</h2>
+            <p className="text-xs md:text-sm">
               Discover perfect Language exchange partners based on your profile.
             </p>
           </div>
           {recommendPending ? (
             <RecommendUserSkeleton />
           ) : recommendUsers.length < 1 ? (
-            <p>No Recomend User Found</p>
+            <div className="flex justify-center h-36">
+                <div className="mx-auto w-full bg-base-300 flex flex-col p-2 items-center justify-center">
+                  <span className="text-2xl text-base/30 font-bold my-3 text-center">
+                    You Don't Have Recommend Friends yet
+                  </span>
+                  <p className="text-xs md:text-sm mb-3 text-center">
+                    Reffer your Friends to Connect with you
+                  </p>
+
+                  <button className=" border px-4 py-2 rounded-lg hover:bg-gradient-to-tr from-primary to-secondary transition-all duration-200 hover:text-black hover:scale-95 hover:font-bold hover:border-none">
+                    Reffer Friend
+                  </button>
+                </div>
+              </div>
           ) : (
             <div className="w-full p-2">
               {console.log(recommendUsers)}

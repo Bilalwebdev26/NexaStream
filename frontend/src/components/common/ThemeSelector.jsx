@@ -56,9 +56,9 @@ const ThemeSelector = () => {
               onClick={() => handleTheme(themeN.name)}
             >
               {/* Left Side: Palette + Label */}
-              <div className="flex items-center gap-1 min-w-[70px]">
-                <Palette className="size-3 text-black" />
-                <span className="text-xs font-semibold truncate text-black">
+              <div className="flex items-center gap-2 min-w-[70px]">
+                <Palette className="size-3 text-white" />
+                <span className="text-xs font-semibold truncate text-white/70">
                   {themeN.label}
                 </span>
               </div>

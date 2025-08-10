@@ -42,7 +42,7 @@ const NavBar = () => {
         <div className={`flex items-center justify-between`}>
           {/* {!showsidebar && ( */}
           <div className="">
-            <Link className="flex items-center  gap-2.5" to={"/"}>
+            <a className="flex items-center  gap-2.5" href="/">
               <ShipWheelIcon className="size-5 lg:size-9 text-primary" />
               <span
                 // onClick={() => setsideBar(true)}
@@ -50,7 +50,7 @@ const NavBar = () => {
               >
                 nexaStream
               </span>
-            </Link>
+            </a>
           </div>
           {/* )} */}
 

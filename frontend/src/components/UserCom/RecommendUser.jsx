@@ -97,7 +97,7 @@ const RecommendUser = ({ recommendUsers }) => {
               </div>
               <div className="">
                 <h3
-                  className="text-sm md:text-lg font-bold hover:underline"
+                  className="text-xs md:text-lg font-bold hover:underline"
                 >
                   {recommend.fullName.split("")[0].toUpperCase() +
                     recommend.fullName.slice(1)}
@@ -117,27 +117,27 @@ const RecommendUser = ({ recommendUsers }) => {
             <div className="">
               <div className="w-full flex items-center gap-1">
                 <div className="w-1/2">
-                  <span className="text-xs font-semibold ">Native : </span>
-                  <div className="w-full border rounded-xl text-center flex items-center justify-center gap-2  text-xs py-1">
+                  <span className="text-[9px] md:text-xs font-semibold ">Native : </span>
+                  <div className="w-full border rounded-xl text-center flex items-center justify-center gap-2 text-[10px]  md:text-xs py-1">
                     <span className="">
                       {" "}
                       {getLangFlag(recommend.nativeLanguage)}
                     </span>
 
-                    <span className="font-semibold">
+                    <span className="hidden md:block text-xs font-semibold">
                       {recommend.nativeLanguage}
                     </span>
                   </div>
                 </div>
                 <div className="w-1/2">
-                  <span className="text-xs font-semibold">Learning : </span>
+                  <span className="text-[9px] md:text-xs font-semibold">Learning : </span>
                   <div className="w-full border rounded-xl text-center flex items-center justify-center gap-2  text-xs py-1">
                     <span className="">
                       {" "}
                       {getLangFlag(recommend.learningLanguage)}
                     </span>
 
-                    <span className="font-semibold">
+                    <span className="hidden md:block font-semibold">
                       {recommend.learningLanguage}
                     </span>
                   </div>
@@ -146,7 +146,7 @@ const RecommendUser = ({ recommendUsers }) => {
             </div>
             {/* Bio */}
             <div className="my-2">
-              <p className="text-xs line-clamp-1">{recommend.bio}</p>
+              <p className="text-[10px] md:text-xs line-clamp-1">{recommend.bio}</p>
             </div>
             {/* button */}
             <div className="">
@@ -166,9 +166,9 @@ const RecommendUser = ({ recommendUsers }) => {
                     </div>
                   ) : (
                     <div className="flex items-center justify-center gap-2">
-                      <UserRoundPlus className="size-4" />
+                      <UserRoundPlus className="size-3 md:size-4" />
                       <span className="text-[10px] md:text-sm font-semibold">
-                        Send Friend Request
+                        Send Request
                       </span>
                     </div>
                   )}
