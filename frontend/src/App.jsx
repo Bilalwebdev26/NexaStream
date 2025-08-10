@@ -12,7 +12,7 @@ import CallPage from "./components/pages/CallPage";
 import Loader from "./components/common/Loader.jsx";
 import useAuthUser from "./hooks/useAuthUser.js";
 import Layout from "./components/common/Layout.jsx";
-import {usethemeStore} from "./store/themeSelector.js"
+import { usethemeStore } from "./store/themeSelector.js";
 import { useSideBarStore } from "./store/globalState.js";
 import Friends from "./components/pages/Friends.jsx";
 import Profile from "./components/pages/Profile.jsx";
@@ -22,12 +22,13 @@ const App = () => {
   const { isLoading, authUser } = useAuthUser();
   const isAuthenticated = Boolean(authUser);
   const isOnboarded = Boolean(authUser?.isOnBoarded);
-  const{theme} = usethemeStore()
+  const { theme } = usethemeStore();
   const { showsidebar } = useSideBarStore();
-  console.log("showsidebar from app : ",showsidebar)
+  console.log("showsidebar from app : ", showsidebar);
   if (isLoading) return <Loader />;
   return (
     <div className="h-screen" data-theme={theme}>
+      <Toaster position="top-right" reverseOrder={false} />
       <Routes>
         <Route>
           <Route
@@ -53,11 +54,15 @@ const App = () => {
           />
           <Route
             path="/profile/:id"
-            element={isAuthenticated ? (
-              <Layout showsidebar={showsidebar}>
-                <Profile /> 
-              </Layout>
-            ): <Navigate to={"/"} />}
+            element={
+              isAuthenticated ? (
+                <Layout showsidebar={showsidebar}>
+                  <Profile />
+                </Layout>
+              ) : (
+                <Navigate to={"/"} />
+              )
+            }
           />
           <Route
             path="/onboard"
@@ -78,7 +83,7 @@ const App = () => {
             element={
               isAuthenticated ? (
                 <Layout showsidebar={showsidebar}>
-                  <Requests/>
+                  <Requests />
                 </Layout>
               ) : (
                 <Navigate to={"/login"} />
@@ -90,7 +95,7 @@ const App = () => {
             element={
               isAuthenticated ? (
                 <Layout showsidebar={showsidebar}>
-                  <Search/>
+                  <Search />
                 </Layout>
               ) : (
                 <Navigate to={"/login"} />
@@ -135,7 +140,7 @@ const App = () => {
           />
         </Route>
       </Routes>
-      <Toaster />
+      {/* <Toaster /> */}
     </div>
   );
 };

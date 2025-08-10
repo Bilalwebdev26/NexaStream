@@ -24,6 +24,7 @@ import {
   X,
 } from "lucide-react";
 import useAuthUser from "../../hooks/useAuthUser";
+import toast, { Toaster } from "react-hot-toast";
 
 const Profile = () => {
   const [checkReqSended, setCheckReqSent] = useState({});
@@ -79,7 +80,12 @@ const Profile = () => {
     mutationFn: unfollow,
     onSuccess: () => {
       queryClient.invalidateQueries({ queryKey: ["showRequest"] });
-       queryClient.invalidateQueries({ queryKey: ["getUserById", id] }); // 👈 Add this
+      queryClient.invalidateQueries({ queryKey: ["getUserById", id] }); // 👈 Add this
+      toast.promise(saveSettings(settings), {
+        loading: "Saving...",
+        success: <b>Unfollow SuccessFully.</b>,
+        error: <b>Could not unfollow.</b>, //toast unfollow ko set kerna https://chatgpt.com/c/6898b468-9584-8330-ae3d-30e32df32420
+      });
     },
   });
 
@@ -97,7 +103,7 @@ const Profile = () => {
       setCheckReqSent(checkReqSend);
       setFriendCheck(friend);
     }
-  }, [outgoingReq, user, authUser,mutateUnfollow]);
+  }, [outgoingReq, user, authUser, mutateUnfollow]);
   const handleSendReq = (id) => {
     if (!id) return;
     console.log("Id : ", id);
